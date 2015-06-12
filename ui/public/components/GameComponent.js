@@ -9,17 +9,17 @@ var
     React = require('react'),
     AmpersandState = require('ampersand-state'),
     Howl = require('howler').Howl,
-    soundSprite = require('../build/sprite'),
+    //soundSprite = require('../build/sprite'),
     config = window.config,
     node = require('../js/node'),
     PlayerComponent = require('./PlayerComponent'),
     StatusComponent = require('./StatusComponent'),
     StatusIndicatorComponent = require('./StatusIndicatorComponent'),
     StatsComponent = require('./StatsComponent'),
-    soundPath = config.clientUrl + '/sounds/',
-    soundQueue = [],
+    //soundPath = config.clientUrl + '/sounds/',
+    //soundQueue = [],
     soundsPlaying = false,
-    sounds,
+    //sounds,
     PlayerModel,
     playerProps,
     player0,
@@ -61,7 +61,7 @@ var GameComponent = module.exports = React.createClass({
 
         var _this = this;
         
-        sounds = new Howl(soundSprite);
+        //sounds = new Howl(soundSprite);
         
         node.socket.on('game.end', _this.end);
         //node.socket.on('game.score', _this.score);
@@ -98,22 +98,22 @@ var GameComponent = module.exports = React.createClass({
     switchServer: function(player) {
         console.log("switching server");
         var
-            _this = this,
-            playerSound = '';
+            _this = this;
+            //playerSound = '';
         
         this.setState({
             server: player
         });
 
         if(player == 0) {
-            playerSound = player0.name;
+            //playerSound = player0.name;
         }
         
         if(player == 1) {
-            playerSound = player1.name;
+            //playerSound = player1.name;
         }
 
-        this.queueSound(playerSound.toLowerCase() + '-to-serve');
+        //this.queueSound(playerSound.toLowerCase() + '-to-serve');
 
     },
     
@@ -145,18 +145,18 @@ var GameComponent = module.exports = React.createClass({
     gamePoint: function(data) {
         
         var
-            player = data.player,
-            playerSound;
+            player = data.player;
+            //playerSound;
         
         if(player == 0) {
-            playerSound = player0.name;
+            //playerSound = player0.name;
         }
         
         if(player == 1) {
-            playerSound = player1.name;
+            //playerSound = player1.name;
         }
 
-        this.queueSound('game-point-' + playerSound.toLowerCase());
+        //this.queueSound('game-point-' + playerSound.toLowerCase());
         
     },
 
@@ -187,26 +187,26 @@ var GameComponent = module.exports = React.createClass({
     end: function(data) {
         
         var
-            _this = this,
-            playerSound = '';
+            _this = this;
+            //playerSound = '';
         
         this.setState({ winner: data.winner });
         
         if(data.winner == 0) {
-            playerSound = player0.name;
+            //playerSound = player0.name;
         }
         
         if(data.winner == 1) {
-            playerSound = player1.name;
+            //playerSound = player1.name;
         }
         
         this.clearAudioQueue();
-        sounds.play('game_end');
+        //sounds.play('game_end');
         
-        setTimeout(function() {
-            this.queueSound(playerSound.toLowerCase + '-won-the-game');
-        }, 900);
-        
+        //setTimeout(function() {
+        //    this.queueSound(playerSound.toLowerCase + '-won-the-game');
+        //}, 900);
+        //
     },
     
     

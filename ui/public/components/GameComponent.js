@@ -91,6 +91,11 @@ var GameComponent = module.exports = React.createClass({
             player1.set(data.player);
         });
 
+        $('.go').on('click', function() {
+            var name = $('input').val();
+            node.socket.emit('fakeJoin', {'name' : name});
+        });
+
     },
 
 
@@ -333,7 +338,12 @@ var GameComponent = module.exports = React.createClass({
                     <PlayerComponent positionId='1' player={player1} server={this.state.server} winner={this.state.winner} />
                     <StatusComponent main='true' />
                 </div>
-                <StatsComponent player0={player0} player1={player1} server={this.state.server} score={this.state.score} />
+                <div className='add-players'>
+                    <div className='add'>
+                        <input placeholder='Name' type='text'></input>
+                        <button className='go'>Lets Rumble</button>
+                    </div>
+                </div>
                 <div className='status-indicators'>
                     <StatusIndicatorComponent state={this.state.table} />
                     <StatusIndicatorComponent state={this.state.cardReader} />

@@ -3,4 +3,4 @@ node_modules
 .idea/
 config.js
 ui/public/build/
-ui/public/build/*
+versions/

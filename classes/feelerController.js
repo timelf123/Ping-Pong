@@ -16,10 +16,19 @@ module.exports = function() {
 /**
  * Feeler Controller
  */
-function FeelerController(data) {
-    this.scoreRegisteredWithinThreshold = false;
-    this.timer;
-    this.on('press', this.counter);
+function FeelerController() {
+    var self = this;
+    self.threshold = config.global.feelers.undoThreshold || 0;
+    self.timer;
+    self.lastPressedTime = -1;
+
+    self.isUndo = function(){
+        if(self.lastPressedTime < 0) return false;
+        return (new Date() - self.lastPressedTime ) < self.threshold;
+    }
+
+    self.on('press', self.counter);
+
 };
 
 util.inherits(FeelerController, events.EventEmitter);
@@ -29,29 +38,18 @@ util.inherits(FeelerController, events.EventEmitter);
 /**
  * Counter
  */
+
 FeelerController.prototype.counter = function() {
-    
-    var _this = this;
-    
-    if(this.scoreRegisteredWithinThreshold) {
-        
+    var self = this;
+    if(self.isUndo()){
         // Feeler pressed within threshold - undo
-        
         this.emit('removePoint');
-        this.scoreRegisteredWithinThreshold = false;
-        
-        return clearTimeout(_this.timer);
-        console.log("removing point.")
-        
+        self.lastPressedTime = new Date();
+        return;
     }
-    
+
     // Feeler pressed after threshold elapsed - score
-    
     this.emit('score');
-    this.scoreRegisteredWithinThreshold = true;
-    
-    this.timer = setTimeout(function() {
-        _this.scoreRegisteredWithinThreshold = false;
-    }, config.global.feelers.undoThreshold);
-    console.log("adding point inside feeler controller counter. emitting score");
+    self.lastPressedTime = new Date();
+    return;
 };

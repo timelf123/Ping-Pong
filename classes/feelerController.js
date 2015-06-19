@@ -39,10 +39,10 @@ FeelerController.prototype.counter = function() {
         
         this.emit('removePoint');
         this.scoreRegisteredWithinThreshold = false;
-        
-        return clearTimeout(_this.timer);
+
         console.log("removing point.")
-        
+        return clearTimeout(_this.timer);
+
     }
     
     // Feeler pressed after threshold elapsed - score

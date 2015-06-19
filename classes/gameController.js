@@ -256,6 +256,7 @@ gameController.prototype.end = function(complete) {
         
         if(i === winningPlayer - 1) {
             player.set('elo', elo.players[i].winningRank);
+            player.set('wins', player.get('wins') + 1);
         } else {
             player.set('elo', elo.players[i].losingRank);
         }

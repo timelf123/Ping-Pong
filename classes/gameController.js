@@ -355,6 +355,8 @@ gameController.prototype.ready = function() {
         });
     });
 
+    io.sockets.emit('game.ready');
+
 };
 
 

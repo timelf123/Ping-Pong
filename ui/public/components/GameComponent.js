@@ -91,8 +91,15 @@ var GameComponent = module.exports = React.createClass({
             player1.set(data.player);
         });
 
+        node.socket.on('game.ready', function() {
+            $('.add-players').fadeOut();
+            console.log('happened');
+        });
+
         $('.go').on('click', function() {
-            var name = $('input').val();
+            var $in = $('input');
+            var name = $in.val();
+            $in.val('');
             node.socket.emit('fakeJoin', {'name' : name});
         });
 

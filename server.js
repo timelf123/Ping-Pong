@@ -75,42 +75,27 @@ io.sockets.on('connection', function(client) {
 	client.on('fakeScored', game.feelerPressed); // Fake score event for easier testing
 	client.on('fakeJoin', function(data) { // fake rfid
 		var name = data.name;
-		var rfid;
 
 		// check if player name exists in db
-		// select * from `Player` where `name` = 'name'
 		new Player({name: name})
 		.fetch()
 		.then(function(model) {
 			if(model === null) {
 				// no player with this name was found. let's create a new entry
+				var randomRFID = Math.floor(Math.random() * 100000) + 1; // generate a random large rfid for now
 				new Player({
 					name : name,
-					rfid : '123'
+					rfid : randomRFID
 				}).save().then(function(model) {
-					console.log("saved a new player!" + model);
-					rfid = model.get('rfid');
-
-					game.addPlayer(this.i, {
-						attr: 'rfid',
-						value: rfid
-					});
+					game.addPlayerByRfid(model.get('rfid'));
 				});
 			}
 			else {
-				console.log("found player!");
 				rfid = model.get('rfid');
-
-				game.addPlayer(this.i, {
-					attr: 'rfid',
-					value: rfid
-				});
+				game.addPlayerByRfid(model.get('rfid'));
 			}
-			
 		});
 	});
-
-	console.log("connection");
 });
 
 

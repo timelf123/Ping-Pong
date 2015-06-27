@@ -24,8 +24,8 @@ app.locals.settings = settings;
 _ = require('underscore');
 io = require('socket.io');
 moment = require('moment');
-//spark = require('sparknode');
-//core = new spark.Core(settings.sparkCore);
+spark = require('sparknode');
+core = new spark.Core(settings.sparkCore);
 
 gameController = require('./classes/gameController');
 
@@ -98,9 +98,6 @@ io.sockets.on('connection', function(client) {
 	});
 });
 
-
-
-/*
 core.on('scored', game.feelerPressed);
 core.on('ping', game.feelersPingReceived);
 core.on('batteryLow', game.batteryLow);
@@ -110,7 +107,6 @@ core.on('online', function() {
 	game.feelerStatus();
 	game.feelersPingReceived();
 });
-*/
 
 cardReader.on('read', function(data) {
 	console.log('New read', data);

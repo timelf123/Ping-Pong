@@ -7,7 +7,6 @@ var
 	// environment = process.env.NODE_ENV = process.env.NODE_ENV || 'production',
 	environment = 'development',
 	app = require('./app.js'),
-	cardReader = require('./lib/cardReader'),
 	leaderboard = require('./lib/leaderboard');
 	Player = require('./models/Player');
 
@@ -24,8 +23,18 @@ app.locals.settings = settings;
 _ = require('underscore');
 io = require('socket.io');
 moment = require('moment');
-spark = require('sparknode');
-core = new spark.Core(settings.sparkCore);
+
+CORE = false;
+CARDREADER = false;
+
+if (CORE) {
+	spark = require('sparknode');
+	core = new spark.Core(settings.sparkCore);
+}
+
+if(CARDREADER) {
+	cardReader = require('./lib/cardReader');
+}
 
 gameController = require('./classes/gameController');
 
@@ -41,10 +50,10 @@ io.configure(function() {
 });
 
 app.get('/', function(req, res) {
-	
+
 	delete require.cache[path.resolve('./versions/js.json')];
 	delete require.cache[path.resolve('./versions/css.json')];
-	
+
 	res.render('home.jade', {
 		title: 'Ping Pong',
 		metaDesc: 'Ping Pong',
@@ -98,27 +107,32 @@ io.sockets.on('connection', function(client) {
 	});
 });
 
-core.on('scored', game.feelerPressed);
-core.on('ping', game.feelersPingReceived);
-core.on('batteryLow', game.batteryLow);
 
-core.on('online', function() {
-	game.feelersOnline();
-	game.feelerStatus();
-	game.feelersPingReceived();
-});
+if (CORE) {
+	core.on('scored', game.feelerPressed);
+	core.on('ping', game.feelersPingReceived);
+	core.on('batteryLow', game.batteryLow);
 
-cardReader.on('read', function(data) {
-	console.log('New read', data);
-	game.addPlayerByRfid(data.rfid);
-});
+	core.on('online', function() {
+		game.feelersOnline();
+		game.feelerStatus();
+		game.feelersPingReceived();
+	});
+}
 
-cardReader.on('err', game.cardReadError);
+if (CARDREADER) {
+	cardReader.on('read', function(data) {
+		console.log('New read', data);
+		game.addPlayerByRfid(data.rfid);
+	});
 
-cardReader.on('connect', function() {
-	io.sockets.emit('cardReader.connect');
-});
+	cardReader.on('err', game.cardReadError);
 
-cardReader.on('disconnect', function() {
-	io.sockets.emit('cardReader.disconnect');
-});
+	cardReader.on('connect', function() {
+		io.sockets.emit('cardReader.connect');
+	});
+
+	cardReader.on('disconnect', function() {
+		io.sockets.emit('cardReader.disconnect');
+	});
+}

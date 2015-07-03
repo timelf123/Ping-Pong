@@ -503,14 +503,27 @@ body {
     animation: blink infinite alternate 300ms 0 ease-in-out;
 }
 
-// temp
+// temp adding players via text
 .add {
     text-align: center;
-    padding: 20px;
+    padding: 10px 0;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    width: 100%;
+    background-color: white;
 
     input, .go {
         padding: 5px 20px;
-        font-size: 24px;
+        font-size: 14px;
         margin: 0 20px;
+        border: 1px solid black;
+        border-radius: 20px;
+    }
+    
+    .go {
+        background-color: @colorBlack;
+        color: white;
+        padding: 5px 40px;
     }
 }

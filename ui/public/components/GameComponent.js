@@ -91,6 +91,7 @@ var GameComponent = module.exports = React.createClass({
             player1.set(data.player);
         });
 
+        // temp for adding players via home page
         node.socket.on('game.ready', function() {
             $('.add-players').fadeOut();
         });
@@ -101,6 +102,7 @@ var GameComponent = module.exports = React.createClass({
             $in.val('');
             node.socket.emit('fakeJoin', {'name' : name});
         });
+        // close temp
 
     },
 
@@ -331,6 +333,9 @@ var GameComponent = module.exports = React.createClass({
         }, 1500);
 
         this.replaceState(this.getInitialState());
+        
+        // temp for adding players via home page
+        $('.add-players').fadeIn();
 
     },
 
@@ -350,6 +355,7 @@ var GameComponent = module.exports = React.createClass({
                         <button className='go'>Lets Rumble</button>
                     </div>
                 </div>
+                <StatsComponent player0={player0} player1={player1} server={this.state.server} score={this.state.score} />
                 <div className='status-indicators'>
                     <StatusIndicatorComponent state={this.state.table} />
                     <StatusIndicatorComponent state={this.state.cardReader} />

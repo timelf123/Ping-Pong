@@ -1,0 +1,34 @@
+@import "variables.less";
+
+#header {
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    
+    .logo {
+        height: 40px;
+    }
+    
+    .logo, .add-players {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    // temp adding players via text
+    .add {
+        input, .go {
+            padding: 5px 20px;
+            font-size: 14px;
+            margin: 0 20px;
+            border: 1px solid black;
+            border-radius: 20px;
+        }
+        
+        .go {
+            background-color: @colorBlack;
+            color: white;
+            padding: 5px 40px;
+        }
+    }
+}

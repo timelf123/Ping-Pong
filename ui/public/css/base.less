@@ -2,6 +2,7 @@
 @import "variables.less";
 @import "retina.less";
 @import "css3.less";
+@import "header.less";
 
 *, *:after, *:before {
     .box-sizing(border-box);
@@ -134,7 +135,7 @@ body {
 .player_container {
     position: relative;
     z-index: 0;
-    height: 68vh;
+    height: 58vh;
 }
 .player {
     position: absolute;
@@ -207,16 +208,15 @@ body {
         text-align: center;
     }
     .details {
-        top: 11vh;
+        top: 7vh;
     }
     .score {
-        font-size: 220px;
+        font-size: 180px;
     }
     .score,
     .winner {
         font-weight: 700;
         line-height: 163px;
-        margin-bottom: 16px;
     }
     .winner {
         top: 7vh;
@@ -250,12 +250,11 @@ body {
     height: 100vh;
     left: 0;
     top: 0;
-    padding: 32px 0;
     background: #221f1f;
     transition: transform 600ms ease-in-out;
     
     &.compact-view {
-        transform: translate3d(0, 68%, 0);
+        transform: translate3d(0, 58%, 0);
         .info {
             opacity: 0;
         }
@@ -304,37 +303,12 @@ body {
     .stats_right {
         float: right;
     }
-    .title {
-        position: absolute;
-        top: -22px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: block;
-        line-height: 1;
-        font-size: 48px;
-        font-weight: 700;
-        text-align: center;
-        &:before {
-            display: block;
-            position: absolute;
-            z-index: -1;
-            top: 0;
-            @spacing: -20px;
-            right: @spacing;
-            bottom: @spacing;
-            left: @spacing;
-            background: #221f1f;
-            content: '';
-        }
-    }
 }
 
 .stats__inner {
-    position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
-    transform: translate3d(0, 196px, 0);
+    transform: translate3d(0, 0fpx, 0);
     transition: transform 600ms ease-in-out;
     
     &:after {
@@ -349,42 +323,6 @@ body {
 }
 
 .compact-view .stats__inner {
-    transform: translate3d(0, 42px, 0);
-}
-
-.stats__logo {
-    @width: 240px;
-    position: relative;
-    width: @width;
-    height: auto;
-    left: 50%;
-    margin-left: -(@width / 2);
-}
-
-.stats__logo-enter,
-.stats__logo-leave.stats__logo-leave-active {
-    opacity: 0;
-    transform: translate3d(0, -60px, 0);
-}
-
-.stats__logo-enter,
-.stats__logo-leave {
-    transition-property: all;
-    transition-duration: 400ms;
-}
-
-.stats__logo-enter {
-    transition-delay: 800ms;
-}
-
-.stats__logo-leave {
-    transition-delay: 0;
-}
-
-.stats__logo-enter.stats__logo-enter-active,
-.stats__logo-leave {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
 }
 
 .stats__components-enter,
@@ -411,13 +349,6 @@ body {
 .stats__component {
     position: relative;
     margin-bottom: @statSpacing;
-}
-
-.stats__component--pin-bottom {
-    position: absolute;
-    width: 100%;
-    bottom: 30vh;
-    text-align: center;
 }
 
 .stats__component--bordered {
@@ -501,29 +432,4 @@ body {
 
 .status-indicator--warning {
     animation: blink infinite alternate 300ms 0 ease-in-out;
-}
-
-// temp adding players via text
-.add {
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    width: 100%;
-    background-color: white;
-
-    input, .go {
-        padding: 5px 20px;
-        font-size: 14px;
-        margin: 0 20px;
-        border: 1px solid black;
-        border-radius: 20px;
-    }
-    
-    .go {
-        background-color: @colorBlack;
-        color: white;
-        padding: 5px 40px;
-    }
 }

@@ -30,9 +30,9 @@ var GameComponent = module.exports = React.createClass({
     componentDidMount: function() {
 
         var _this = this;
-        
-        //node.socket.on('core.batteryLow', _this.batteryLow);
-        //node.socket.on('core.online', _this.batteryReplenished);
+
+        node.socket.on('core.batteryLow', _this.batteryLow);
+        node.socket.on('core.online', _this.batteryReplenished);
         if(node.socket == null) {
             console.log("null... so attempting to start again");
             node.start();
@@ -53,30 +53,30 @@ var GameComponent = module.exports = React.createClass({
         });
 
     },
-    
-    
-    
+
+
+
     error: function(error, timeout, important) {
 
         if(this.state.important && !important) {
             return;
         }
-        
+
         this.setState({
             error: true,
             message: error
         });
-        
+
         if(important) {
             this.setState({
                 important: true
             });
         }
-        
+
         if(typeof timeout !== 'undefined') {
             setTimeout(this.resolveError, timeout);
         }
-        
+
     },
 
 
@@ -84,101 +84,101 @@ var GameComponent = module.exports = React.createClass({
     importantError: function(error) {
         return this.error(error, undefined, true);
     },
-    
-    
-    
+
+
+
     info: function(message) {
 
         if(this.state.important) {
             return;
         }
-    
+
         this.setState({
             error: false,
             message: message
         });
 
     },
-    
-    
-    
+
+
+
     resolveError: function() {
         if(this.state.error) {
             this.reset();
         }
     },
-    
-    
-    
+
+
+
     cardReadError: function() {
         this.error('Card reader error', 3000);
     },
-    
-    
-    
+
+
+
     batteryLow: function() {
         this.importantError('Table batteries low');
     },
-    
-    
-    
+
+
+
     batteryReplenished: function() {
         this.resolveError();
     },
-    
-    
-    
+
+
+
     playerNotFound: function(data) {
         this.error('Player with ' + data.attr + ' ' + data.value + ' not found', 3000);
     },
-    
-    
-    
+
+
+
     clearInfo: function() {
         if(!this.state.error) {
             this.reset();
         }
     },
-    
-    
-    
+
+
+
     reset: function() {
         this.replaceState(this.getInitialState());
     },
-    
-    
-    
+
+
+
     render: function() {
-        
+
         var
             classes = 'info',
             innerClasses = 'info__inner',
             status = <div></div>,
             message;
-        
+
         if(this.state.error) {
             classes += ' error';
         }
-        
+
         if(this.props.mini) {
             classes += ' info--mini';
         }
-        
+
         if(this.props.main) {
             classes += ' info--main';
         }
-        
+
         if(this.state.important) {
             classes += ' info--important';
         }
-        
+
         // Here we set the inner HTML, as the server may be sending
         // an HTML chunk rather than just a string of text
         if(this.state.message !== '') {
             message = '<div class="' + innerClasses + '">' + this.state.message + '</div>';
             status = <div className={classes} dangerouslySetInnerHTML={{ __html: message }} key='status'></div>;
         }
-        
+
         // transitionEnter and transitionLeave are disabled for important errors - the infinite animation
         // within screws with the ReactCSSTransitionGroup enclosing it.
         return (
@@ -186,9 +186,9 @@ var GameComponent = module.exports = React.createClass({
                 {status}
             </ReactCSSTransitionGroup>
         );
-        
-    }
-    
 
-    
+    }
+
+
+
 });

@@ -60,9 +60,9 @@ var GameComponent = module.exports = React.createClass({
     componentDidMount: function() {
 
         var _this = this;
-        
+
         //sounds = new Howl(soundSprite);
-        
+
         node.socket.on('game.end', _this.end);
         //node.socket.on('game.score', _this.score);
         node.socket.on('game.reset', _this.reset);
@@ -75,25 +75,24 @@ var GameComponent = module.exports = React.createClass({
         node.socket.on('game.switchServer', function(data) {
             _this.switchServer(data.player);
         });
-        
+
         node.socket.on('feelers.disconnect', _this.tableDisconnected);
         node.socket.on('feelers.connect', _this.tableConnected);
-        //node.socket.on('core.batteryLow', _this.tableBatteryLow);
-        
+        node.socket.on('core.batteryLow', _this.tableBatteryLow);
+
         node.socket.on('cardReader.connect', _this.cardReaderConnected);
         node.socket.on('cardReader.disconnect', _this.cardReaderDisconnected);
-        
+
         node.socket.on('player0.join', function(data) {
             player0.set(data.player);
         });
-        
+
         node.socket.on('player1.join', function(data) {
             player1.set(data.player);
         });
 
         node.socket.on('game.ready', function() {
             $('.add-players').fadeOut();
-            console.log('happened');
         });
 
         $('.go').on('click', function() {
@@ -112,7 +111,7 @@ var GameComponent = module.exports = React.createClass({
         var
             _this = this;
             //playerSound = '';
-        
+
         this.setState({
             server: player
         });
@@ -120,7 +119,7 @@ var GameComponent = module.exports = React.createClass({
         if(player == 0) {
             //playerSound = player0.name;
         }
-        
+
         if(player == 1) {
             //playerSound = player1.name;
         }
@@ -128,9 +127,9 @@ var GameComponent = module.exports = React.createClass({
         //this.queueSound(playerSound.toLowerCase() + '-to-serve');
 
     },
-    
-    
-    
+
+
+
     score: function(data) {
         console.log("updating score and setting state");
         var _this = this;
@@ -155,21 +154,21 @@ var GameComponent = module.exports = React.createClass({
 
 
     gamePoint: function(data) {
-        
+
         var
             player = data.player;
             //playerSound;
-        
+
         if(player == 0) {
             //playerSound = player0.name;
         }
-        
+
         if(player == 1) {
             //playerSound = player1.name;
         }
 
         //this.queueSound('game-point-' + playerSound.toLowerCase());
-        
+
     },
 
 
@@ -177,9 +176,9 @@ var GameComponent = module.exports = React.createClass({
     announceScore: function() {
 /*
         var announcement = this.state.score;
-        
+
         if(typeof this.state.winner === 'undefined' && announcement[0] > 0 || announcement[1] > 0) {
-        
+
             // Announce the server's score first
             if(this.state.server == 1) {
                 announcement.reverse();
@@ -193,76 +192,76 @@ var GameComponent = module.exports = React.createClass({
         }
 */
     },
-    
-    
-    
+
+
+
     end: function(data) {
-        
+
         var
             _this = this;
             //playerSound = '';
-        
+
         this.setState({ winner: data.winner });
-        
+
         if(data.winner == 0) {
             //playerSound = player0.name;
         }
-        
+
         if(data.winner == 1) {
             //playerSound = player1.name;
         }
-        
+
         this.clearAudioQueue();
         //sounds.play('game_end');
-        
+
         //setTimeout(function() {
         //    this.queueSound(playerSound.toLowerCase + '-won-the-game');
         //}, 900);
         //
     },
-    
-    
-    
+
+
+
     tableConnected: function() {
         this.setState({
             table: true
         });
     },
-    
-    
-    
+
+
+
     tableDisconnected: function() {
         this.setState({
             table: false
         });
     },
-    
-    
-    
+
+
+
     cardReaderConnected: function() {
         this.setState({
             cardReader: true
         });
     },
-    
-    
-    
+
+
+
     cardReaderDisconnected: function() {
         this.setState({
             cardReader: false
         });
     },
-    
-    
-    
+
+
+
     tableBatteryLow: function() {
         this.setState({
             table: 'warning'
         });
     },
-    
-    
-    
+
+
+
     queueSound: function(sound, offset, cb) {
         soundQueue.push({
             name: sound,
@@ -271,23 +270,23 @@ var GameComponent = module.exports = React.createClass({
         });
         this.playQueue();
     },
-    
-    
-    
+
+
+
     playQueue: function() {
-        
+
         var
             _this = this,
             play;
-        
+
         if(soundsPlaying) {
             return;
         }
-        
+
         soundsPlaying = true;
 
         play = function() {
-            
+
             var
                 sound = {},
                 duration = 0,
@@ -313,9 +312,9 @@ var GameComponent = module.exports = React.createClass({
         //play();
 
     },
-    
-    
-    
+
+
+
     clearAudioQueue: function() {
         soundQueue = [];
     },
@@ -334,9 +333,9 @@ var GameComponent = module.exports = React.createClass({
         this.replaceState(this.getInitialState());
 
     },
-    
-    
-    
+
+
+
     render: function() {
         return (
             <div>
@@ -358,7 +357,7 @@ var GameComponent = module.exports = React.createClass({
             </div>
         );
     }
-    
 
-    
+
+
 });

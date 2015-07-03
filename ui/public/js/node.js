@@ -17,7 +17,6 @@ function nodeController(options) {
     this.disconnectAttempt = false;
     
     // Map left and right arrow keys to score events
-    // Map left and right arrow keys to score events
     $(window).on('keyup', function(e) {
         var playerKeys = { 37: 1, 39: 2 };
         if(typeof playerKeys[e.keyCode] !== 'undefined') {

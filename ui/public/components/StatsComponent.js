@@ -131,7 +131,6 @@ var StatsComponent = module.exports = React.createClass({
             headToHeadScore,
             firstMatch,
             leaderboard,
-            logo,
             mostFrequentPlayer,
             biggestWinningStreak,
             mostConsecutiveLosses,
@@ -231,8 +230,6 @@ var StatsComponent = module.exports = React.createClass({
 
         if(this.state.fullView) {
             
-            logo = <img className="stats__logo" src='img/logos/logo.png' alt='Ping Pong' key='logo' />;
-            
             leaderboard = (
                 <div className="stats__component" key="leaderboard">
                     <span className="header stats__title">Leaderboard</span>
@@ -302,11 +299,7 @@ var StatsComponent = module.exports = React.createClass({
         return (
             <div className={classes}>
                 <StatusComponent mini='true' />
-                <ReactCSSTransitionGroup transitionName='stats__logo'>
-                    {logo}
-                </ReactCSSTransitionGroup>
                 <div className="stats__inner">
-                    <span className="title">Stats</span>
                     <div className="stats_left stats">
                         <div className='stats__group'>
                             <ReactCSSTransitionGroup transitionName='stats__components'>

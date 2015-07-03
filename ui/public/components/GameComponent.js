@@ -60,6 +60,9 @@ var GameComponent = module.exports = React.createClass({
     componentDidMount: function() {
 
         var _this = this;
+        
+        // going to go suuuuper hacky here and inject add players form into header
+        $('#header').append('<div class="add-players"><div class="add"><input placeholder="Name" type="text"></input><button class="go">Lets Rumble</button></div></div>');
 
         //sounds = new Howl(soundSprite);
 
@@ -348,12 +351,6 @@ var GameComponent = module.exports = React.createClass({
                     <PlayerComponent positionId='0' player={player0} server={this.state.server} winner={this.state.winner} />
                     <PlayerComponent positionId='1' player={player1} server={this.state.server} winner={this.state.winner} />
                     <StatusComponent main='true' />
-                </div>
-                <div className='add-players'>
-                    <div className='add'>
-                        <input placeholder='Name' type='text'></input>
-                        <button className='go'>Lets Rumble</button>
-                    </div>
                 </div>
                 <StatsComponent player0={player0} player1={player1} server={this.state.server} score={this.state.score} />
                 <div className='status-indicators'>

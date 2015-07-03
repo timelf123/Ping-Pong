@@ -80,7 +80,11 @@ game.feelersPingReceived();
 io.sockets.on('connection', function(client) {
 	game.reset();
 	game.clientJoined();
-	cardReader.connectionStatus();
+
+	if (CARDREADER) {
+		cardReader.connectionStatus();
+	}
+
 	client.on('fakeScored', game.feelerPressed); // Fake score event for easier testing
 	client.on('fakeJoin', function(data) { // fake rfid
 		var name = data.name;

@@ -206,19 +206,15 @@ gameController.prototype.reset = function() {
  * End game and reset score
  */
 gameController.prototype.end = function(complete) {
-    
     complete = typeof complete == 'undefined' ? true : complete;
-    
-    var
-        _this = this,
-        winningPlayer = this.leadingPlayer(),
-        updatedRanks = [];
-    
     if(!complete) {
         io.sockets.emit('game.reset');
         return this.reset();
     }
-    
+
+    var _this = this,
+        winningPlayer = this.leadingPlayer(),
+        updatedRanks = [];
     
     if(winningPlayer - 1 === 0) {
         updatedRanks = [elo.players[0].winningLeaderboardRank, elo.players[1].losingLeaderboardRank];

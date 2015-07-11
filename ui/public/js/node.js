@@ -16,10 +16,24 @@ function nodeController(options) {
     this.connected = true;
     this.disconnectAttempt = false;
     
+    var downKeys = [];
+    var playerKeys = { 37: 1, 39: 2 };
+
+    // Keep track of keydown events so we can end the game if both 'feelers' are pressed
+    $(window).on('keydown', function(e) {
+        if (typeof playerKeys[e.keyCode] !== 'undefined' && downKeys.indexOf(playerKeys[e.keyCode]) == -1) {
+            downKeys.push(playerKeys[e.keyCode]);
+        }
+        if (downKeys.indexOf(1) != -1 && downKeys.indexOf(2) != -1) {
+            downKeys = [];
+            _this.socket.emit('fakeEndGame');
+        }
+    });
+
     // Map left and right arrow keys to score events
     $(window).on('keyup', function(e) {
-        var playerKeys = { 37: 1, 39: 2 };
-        if(typeof playerKeys[e.keyCode] !== 'undefined') {
+        if (typeof playerKeys[e.keyCode] !== 'undefined') {
+            downKeys.splice(downKeys.indexOf(playerKeys[e.keyCode], 1));
             _this.socket.emit('fakeScored', { data: playerKeys[e.keyCode] });
         }
     });

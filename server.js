@@ -109,11 +109,19 @@ io.sockets.on('connection', function(client) {
 			}
 		});
 	});
+	client.on('fakeEndGame', function() {
+		var record = (settings.recordUnfinishedGames !== 'undefined')? settings.recordUnfinishedGames : false;
+		game.end(record);
+	});
 });
 
 
 if (CORE) {
 	core.on('scored', game.feelerPressed);
+	core.on('endGame', function() {
+		var record = (settings.recordUnfinishedGames !== 'undefined')? settings.recordUnfinishedGames : false;
+		game.end(record);
+	});
 	core.on('ping', game.feelersPingReceived);
 	core.on('batteryLow', game.batteryLow);
 

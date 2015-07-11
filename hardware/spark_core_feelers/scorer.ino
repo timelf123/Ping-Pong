@@ -10,6 +10,10 @@ int feeler1PreviousState;
 int feeler2PreviousState;
 int batteryLevelPreviousState;
 
+int feeler1ConsecutivePresses;
+int feeler2ConsecutivePresses;
+int consecutivePressThreshold = 30; // 3 seconds
+
 void setup() {
     pinMode(feeler1, INPUT_PULLDOWN);
     pinMode(feeler2, INPUT_PULLDOWN);
@@ -27,15 +31,32 @@ void loop() {
         Spark.publish("online", "1", 60, PRIVATE);
     }
     
-    if(feeler1Pressed == HIGH && feeler1Pressed != feeler1PreviousState) {
-        Spark.publish("scored", "1", 60, PRIVATE);
+    if (feeler1Pressed == HIGH) {
+        if (feeler1PreviousState == HIGH) {
+            feeler1ConsecutivePresses += 1;
+        } else {
+            Spark.publish("scored", "1", 60, PRIVATE);
+        }
+    } else {
+        feeler1ConsecutivePresses = 0;
     }
     
-    if(feeler2Pressed == HIGH && feeler2Pressed != feeler2PreviousState) {
-        Spark.publish("scored", "2", 60, PRIVATE);
+    if (feeler2Pressed == HIGH) {
+        if (feeler2PreviousState == HIGH) {
+            feeler2ConsecutivePresses += 1;
+        } else {
+            Spark.publish("scored", "2", 60, PRIVATE);
+        }
+    } else {
+        feeler2ConsecutivePresses = 0;
+    }
+
+    if (feeler1ConsecutivePresses == consecutivePressThreshold
+            && feeler2ConsecutivePresses == consecutivePressThreshold) {
+        Spark.publish("endGame", null, 60, PRIVATE);
     }
     
-    if(batteryLevel == LOW && batteryLevel != batteryLevelPreviousState) {
+    if (batteryLevel == LOW && batteryLevel != batteryLevelPreviousState) {
         Spark.publish("batteryLow", "1", 60, PRIVATE);
     }
     

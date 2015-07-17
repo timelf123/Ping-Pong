@@ -41,15 +41,22 @@ util.inherits(FeelerController, events.EventEmitter);
 
 FeelerController.prototype.counter = function() {
     var self = this;
-    if(self.isUndo()){
-        // Feeler pressed within threshold - undo
-        this.emit('removePoint');
-        self.lastPressedTime = new Date();
-        return;
+    if(!self.timer && !self.isUndo()){
+
+        self.timer = setTimeout(function(){
+            console.log('SCORING FUNCTION RUNNING');
+            self.emit('score');
+            self.timer = null;
+        }, self.threshold);
+    }
+    else if(self.isUndo()){
+        console.log("killing scoring function!");
+        console.log(self.timer);
+        clearTimeout(self.timer);
+        self.emit('removePoint');
+        self.timer = null;
     }
 
-    // Feeler pressed after threshold elapsed - score
-    this.emit('score');
     self.lastPressedTime = new Date();
-    return;
+
 };

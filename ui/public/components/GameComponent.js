@@ -216,7 +216,6 @@ var GameComponent = module.exports = React.createClass({
             //playerSound = player1.name;
         }
 
-        this.clearAudioQueue();
         //sounds.play('game_end');
 
         //setTimeout(function() {
@@ -319,26 +318,23 @@ var GameComponent = module.exports = React.createClass({
     },
 
 
-
-    clearAudioQueue: function() {
-        soundQueue = [];
-    },
-
-
-
     reset: function() {
+        var self = this;
         console.log("reset");
         setTimeout(function() {
             for(var prop in playerProps) {
                 player0.unset(prop);
                 player1.unset(prop);
+
+                self.setState(self.getInitialState());
+
+                // temp for adding players via home page
+                $('.add-players').fadeIn();
+
+
             }
         }, 1500);
 
-        this.replaceState(this.getInitialState());
-        
-        // temp for adding players via home page
-        $('.add-players').fadeIn();
 
     },
 

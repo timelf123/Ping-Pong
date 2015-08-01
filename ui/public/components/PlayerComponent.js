@@ -169,7 +169,7 @@ var PlayerComponent = module.exports = React.createClass({
 
     reset: function() {
         this.gamePoint(false);
-        this.replaceState(this.getInitialState());
+        this.setState(this.getInitialState());
     },
     
     

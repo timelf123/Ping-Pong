@@ -11,7 +11,8 @@ var
     config = window.config,
     node = require('../js/node'),
     StatusComponent = require('./StatusComponent'),
-    LeaderboardComponent = require('./leaderboard/LeaderboardComponent');
+    LeaderboardComponent = require('./leaderboard/LeaderboardComponent'),
+    GameSettingsComponent = require('./GameSettingsComponent');
 
 
     
@@ -131,6 +132,7 @@ var StatsComponent = module.exports = React.createClass({
             headToHeadScore,
             firstMatch,
             leaderboard,
+            settings,
             mostFrequentPlayer,
             biggestWinningStreak,
             mostConsecutiveLosses,
@@ -229,7 +231,14 @@ var StatsComponent = module.exports = React.createClass({
         }
 
         if(this.state.fullView) {
-            
+
+            settings = (
+                <div className="stats__component settingsComponent" key="gamesettings">
+                    <span className="header stats__title">Game Settings</span>
+                    <GameSettingsComponent/>
+                </div>
+            );
+
             leaderboard = (
                 <div className="stats__component" key="leaderboard">
                     <span className="header stats__title">Leaderboard</span>
@@ -298,10 +307,13 @@ var StatsComponent = module.exports = React.createClass({
 
         return (
             <div className={classes}>
+                <div class="test">
+                    {settings}
+                </div>
                 <StatusComponent mini='true' />
                 <div className="stats__inner">
                     <div className="stats_left stats">
-                        <div className='stats__group'>
+                           <div className='stats__group'>
                             <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}
                                 {score}

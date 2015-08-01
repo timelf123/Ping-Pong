@@ -3,7 +3,6 @@ var
     debounce = require('debounce'),
     app = require('../app'),
     elo = require('./eloComparator')(),
-    settings = app.get('settings'),
     Feeler = require('./feelerController'),
     Game = require('../models/Game'),
     Player = require('../models/Player'),
@@ -135,7 +134,7 @@ gameController.prototype.addPlayer = function(playerID, custom) {
             return;
         }
 
-        if(players.length === settings.maxPlayers) {
+        if(players.length === global.settings.maxPlayers) {
             // A third player joined, prompting the game to be reset
             console.log(chalk.yellow('A third player joined, resetting the game'));
             return game.end(false);
@@ -152,7 +151,7 @@ gameController.prototype.addPlayer = function(playerID, custom) {
         position = players.indexOf(player);
         elo.addPlayer(player, position);
         
-        if(players.length === settings.minPlayers) {
+        if(players.length === global.settings.minPlayers) {
             game.ready();
         }
         
@@ -212,6 +211,14 @@ gameController.prototype.end = function(complete) {
         return this.reset();
     }
 
+    if(!game.inProgress) {
+        console.log("game not started");
+        // Game not started, try to start...
+        return;
+    }
+
+
+
     var _this = this,
         winningPlayer = this.leadingPlayer(),
         updatedRanks = [];
@@ -232,7 +239,7 @@ gameController.prototype.end = function(complete) {
     
     setTimeout(function() {
         io.sockets.emit('game.reset');
-    }, settings.winningViewDuration + 200);
+    }, global.settings.winningViewDuration + 200);
 
     gameModel.set({
         winner_id: players[winningPlayer - 1].id,
@@ -277,7 +284,17 @@ gameController.prototype.end = function(complete) {
  */
 gameController.prototype.feelerPressed = function(data) {
     var positionId = data.data - 1;
+    if(players.length < 2){
+        global.settings.maxScore = global.settings.maxScore === 11 ? 21 : 11;
+        global.settings.serverSwitchLimit = global.settings.maxScore === 11 ? 2 : 5;
+        global.settings.serverSwitchThreshold = global.settings.maxScore - 1;
+            io.sockets.emit('game.changeSettings', {
+            maxScore: global.settings.maxScore
+        });
+    }
+
     game.feelers[positionId].emit('press', positionId);
+
 };
 
 
@@ -364,7 +381,7 @@ gameController.prototype.ready = function() {
 gameController.prototype.start = function(startingServe) {
     
     if(!game.minPlayersAdded()) {
-        console.log(chalk.red('Can\'t start the game until ' + settings.minPlayers + ' players have joined'));
+        console.log(chalk.red('Can\'t start the game until ' + global.settings.minPlayers + ' players have joined'));
         return false;
     }
     
@@ -483,8 +500,8 @@ gameController.prototype.pointRemoved = function(event) {
 gameController.prototype.checkWon = function() {
 
     var
-        playerReachedMaxScore = game.score[0] >= settings.maxScore || game.score[1] >= settings.maxScore,
-        playerReachedScoreClearance = Math.abs(game.score[0] - game.score[1]) >= settings.mustWinBy;
+        playerReachedMaxScore = game.score[0] >= global.settings.maxScore || game.score[1] >= global.settings.maxScore,
+        playerReachedScoreClearance = Math.abs(game.score[0] - game.score[1]) >= global.settings.mustWinBy;
 
     if(playerReachedMaxScore && playerReachedScoreClearance) {
         game.end();
@@ -506,8 +523,8 @@ gameController.prototype.checkServerSwitch = function(forceServe) {
         _this = this,
         totalScore = this.score[0] + this.score[1],
         pointJustCancelled = this.gameHistory.length > 0 && this.gameHistory[0].action == 'cancelPoint',
-        switchServer = totalScore % settings.serverSwitchLimit === 0 || this.serverSwitchThresholdMet() || typeof forceServe !== 'undefined',
-        switchPreviousServer = (totalScore + 1) % settings.serverSwitchLimit === 0 && pointJustCancelled;
+        switchServer = totalScore % global.settings.serverSwitchLimit === 0 || this.serverSwitchThresholdMet() || typeof forceServe !== 'undefined',
+        switchPreviousServer = (totalScore + 1) % global.settings.serverSwitchLimit === 0 && pointJustCancelled;
     
     if(switchServer || switchPreviousServer) {
         
@@ -542,7 +559,8 @@ gameController.prototype.checkServerSwitch = function(forceServe) {
  */
 gameController.prototype.serverSwitchThresholdMet = function() {
     return this.score.every(function(score) {
-        return score >= settings.serverSwitchThreshold;
+        console.log('score' + score);
+        return score >= global.settings.serverSwitchThreshold;
     });
 };
 
@@ -573,7 +591,7 @@ gameController.prototype.playerInGame = function(playerID) {
  * Have the minimum quantity of players been added?
  */
 gameController.prototype.minPlayersAdded = function() {
-    return players.length >= settings.minPlayers;
+    return players.length >= global.settings.minPlayers;
 };
 
 
@@ -589,7 +607,7 @@ gameController.prototype.nextPointWins = function() {
         leadingPlayer = (nextScorePlayer1 > nextScorePlayer2) ? 1 : 2,
         futureScoreDifference = (nextScorePlayer1 > nextScorePlayer2) ? nextScorePlayer1 - nextScorePlayer2 : nextScorePlayer2 - nextScorePlayer1;
 
-    return (nextScorePlayer1 >= settings.maxScore || nextScorePlayer2 >= settings.maxScore) && (futureScoreDifference + 1 >= settings.mustWinBy);
+    return (nextScorePlayer1 >= global.settings.maxScore || nextScorePlayer2 >= global.settings.maxScore) && (futureScoreDifference + 1 >= global.settings.mustWinBy);
 
 };
 
@@ -639,7 +657,7 @@ gameController.prototype.batteryLow = function() {
 var debounceFeelers = debounce(function() {
     io.sockets.emit('feelers.disconnect');
     debounceFeelers();
-}, settings.feelers.pingInterval + settings.feelers.pingThreshold);
+}, global.settings.feelers.pingInterval + global.settings.feelers.pingThreshold);
 
 gameController.prototype.feelersPingReceived = function() {
     io.sockets.emit('feelers.connect');

@@ -143,7 +143,7 @@ var GameComponent = module.exports = React.createClass({
 
 
     reset: function() {
-        this.replaceState(this.getInitialState());
+        this.setState(this.getInitialState());
     },
 
 

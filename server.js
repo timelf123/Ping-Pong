@@ -8,13 +8,15 @@ var
 	environment = 'development',
 	app = require('./app.js'),
 	leaderboard = require('./lib/leaderboard');
-	Player = require('./models/Player');
+	Player = require('./models/Player'),
+    //deprecating these
+    getConfig = require('./config'),
+    config = getConfig[environment],
+    settings = getConfig.global;
 
-getConfig = require('./config');
-config = getConfig[environment];
-settings = getConfig.global;
 
-app.set('settings', settings);
+global.settings = settings;
+
 app.engine('jade', jade.__express);
 app.use(serveStatic('./ui/public'));
 app.locals.config = config;

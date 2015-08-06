@@ -19,18 +19,23 @@ var GameSettingsComponent = module.exports = React.createClass({
 
     componentDidMount: function() {
         var self = this;
-        node.socket.on('game.end', self.clearInfo);
+        this.setState(this.getInitialState());
 
+        node.socket.on('game.end', self.clearInfo);
         node.socket.on('game.changeSettings', self.updateSettings);
+
     },
 
     updateSettings: function(returnVal){
         var self = this;
-        var maxScore = returnVal.maxScore;
-        console.log(maxScore);
-        self.setState({
-            selected: maxScore
-        });
+
+        if(self.isMounted()) {
+            var maxScore = returnVal.maxScore;
+            console.log(maxScore);
+            self.setState({
+                selected: maxScore
+            });
+        }
     },
 
     clearInfo: function(){
@@ -38,11 +43,8 @@ var GameSettingsComponent = module.exports = React.createClass({
     },
 
     reset: function(){
-        try{
+        if(this.isMounted()) {
             this.setState(this.getInitialState());
-        }
-        catch(e){
-            //do nothing
         }
 
     },

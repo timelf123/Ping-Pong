@@ -211,20 +211,22 @@ body {
         top: 7vh;
     }
     .score {
-        font-size: 180px;
+        font-size: 300px;
     }
     .score,
     .winner {
+        margin-top: 7%;
         font-weight: 700;
         line-height: 163px;
     }
     .winner {
         top: 7vh;
-        font-size: 20vw;
+        font-size: 10vw;
     }
     .name {
-        font-size: 50px;
-        line-height: 43px;
+        margin-top: 11%;
+        font-size: 70px;
+        line-height: 100%;
     }
 }
 .winner-announcement-enter,
@@ -434,22 +436,35 @@ body {
     animation: blink infinite alternate 300ms 0 ease-in-out;
 }
 
+.settings_title, .settingsPanel{
+    line-height: 100%;
+}
+
 //Game settings
 .settingsPanel {
     margin: 10px;
 }
 
+.compact-view{
+    .settingsComponent{
+        display: none;
+    }
+}
+
 .settingsComponent{
     text-align: center;
     padding-top: 20px;
+    font-size: 50px;
+    height: 30%;
+    width: 100%;
 }
 
 span.setting {
     margin: 20px;
-    border: 5px solid transparent;
-    padding: 2px;
+    border: 8px solid transparent;
+    padding: 10px;
 }
 
 span.setting.selected {
-    border: 5px solid white;
+    border: 8px dashed yellow;
 }

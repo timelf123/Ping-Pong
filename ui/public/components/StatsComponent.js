@@ -4,7 +4,6 @@
 'use strict';
 
 
-
 var
     React = require('react'),
     ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup'),
@@ -15,11 +14,10 @@ var
     GameSettingsComponent = require('./GameSettingsComponent');
 
 
-    
 var StatsComponent = module.exports = React.createClass({
 
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             fullView: true,
             playersFirstGame: undefined,
@@ -35,37 +33,36 @@ var StatsComponent = module.exports = React.createClass({
     },
 
 
-
-    componentDidMount: function() {
+    componentDidMount: function () {
 
         var _this = this;
 
-        node.socket.on('stats.lastGameBetweenPlayers', function(data) {
+        node.socket.on('stats.lastGameBetweenPlayers', function (data) {
             _this.lastGameBetweenPlayers(data.lastGame);
         });
 
-        node.socket.on('stats.headToHead', function(data) {
+        node.socket.on('stats.headToHead', function (data) {
             _this.headToHead(data.headToHead);
         });
 
-        node.socket.on('stats.biggestWinningStreak', function(streak) {
-            _this.setState({ biggestWinningStreak: streak });
+        node.socket.on('stats.biggestWinningStreak', function (streak) {
+            _this.setState({biggestWinningStreak: streak});
         });
 
-        node.socket.on('stats.mostConsecutiveLosses', function(streak) {
-            _this.setState({ mostConsecutiveLosses: streak });
+        node.socket.on('stats.mostConsecutiveLosses', function (streak) {
+            _this.setState({mostConsecutiveLosses: streak});
         });
 
-        node.socket.on('stats.largestWhooping', function(whooping) {
-            _this.setState({ largestWhooping: whooping });
+        node.socket.on('stats.largestWhooping', function (whooping) {
+            _this.setState({largestWhooping: whooping});
         });
 
-        node.socket.on('stats.totalCompanyGames', function(count) {
-            _this.setState({ totalCompanyGames: count });
+        node.socket.on('stats.totalCompanyGames', function (count) {
+            _this.setState({totalCompanyGames: count});
         });
 
-        node.socket.on('stats.mostFrequentPlayer', function(player) {
-            _this.setState({ mostFrequentPlayer: player });
+        node.socket.on('stats.mostFrequentPlayer', function (player) {
+            _this.setState({mostFrequentPlayer: player});
         });
 
         node.socket.on('leaderboard.hide', _this.showCompactView);
@@ -73,45 +70,39 @@ var StatsComponent = module.exports = React.createClass({
         node.socket.on('game.reset', _this.reset);
 
     },
-    
-    
-    
-    end: function(data) {
-        this.setState({ winner: data.winner });
+
+
+    end: function (data) {
+        this.setState({winner: data.winner});
         setTimeout(this.showFullView, config.winningViewDuration);
     },
-    
-    
-    
-    showFullView: function() {
-        this.setState({ fullView: true });
+
+
+    showFullView: function () {
+        this.setState({fullView: true});
     },
-    
-    
-    
-    showCompactView: function() {
-        this.setState({ fullView: false });
+
+
+    showCompactView: function () {
+        this.setState({fullView: false});
     },
-    
-    
-    
-    lastGameBetweenPlayers: function(lastGame) {
+
+
+    lastGameBetweenPlayers: function (lastGame) {
         this.setState({
             lastGame: lastGame
         });
     },
-    
-    
-    
-    headToHead: function(players) {
+
+
+    headToHead: function (players) {
         this.setState({
             headToHead: players
         });
     },
-    
-    
-    
-    reset: function() {
+
+
+    reset: function () {
         this.setState({
             fullView: true,
             lastGame: undefined,
@@ -120,10 +111,9 @@ var StatsComponent = module.exports = React.createClass({
             winner: undefined
         });
     },
-    
-    
-    
-    render: function() {
+
+
+    render: function () {
 
         var
             classes = 'stats_container clearfix',
@@ -140,17 +130,17 @@ var StatsComponent = module.exports = React.createClass({
             totalCompanyGames,
             winner;
 
-        if(!this.state.fullView) {
+        if (!this.state.fullView) {
             classes += ' compact-view';
         }
 
-        if(this.state.playersFirstGame) {
+        if (this.state.playersFirstGame) {
             firstMatch = <div className="stat_score">Players First Match</div>;
         }
-        
-        if(!this.state.fullView) {
-            
-            if(this.state.lastGame) {
+
+        if (!this.state.fullView) {
+
+            if (this.state.lastGame) {
                 score = (
                     <div className="stats__component" key="last-game">
                         <span className="header stats__title">Last Game</span>
@@ -165,7 +155,7 @@ var StatsComponent = module.exports = React.createClass({
                         </div>
                     </div>
                 );
-            } else if(typeof this.props.player0.name !== 'undefined' &&  typeof this.props.player1.name !== 'undefined') {
+            } else if (typeof this.props.player0.name !== 'undefined' && typeof this.props.player1.name !== 'undefined') {
                 score = (
                     <div className="stats__component" key="last-game">
                         <span className="header stats__title">Last Game</span>
@@ -181,8 +171,8 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
-            if(typeof this.state.winner !== 'undefined') {
+
+            if (typeof this.state.winner !== 'undefined') {
                 score = (
                     <div className="stats__component" key="last-game">
                         <span className="header stats__title">Final Score</span>
@@ -198,21 +188,21 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
+
         }
-        
-        if( (!this.state.fullView && this.state.headToHead) || (!this.state.fullView && this.state.winner) ) {
-            
-            if(typeof this.state.headToHead !== 'undefined') {
+
+        if ((!this.state.fullView && this.state.headToHead) || (!this.state.fullView && this.state.winner)) {
+
+            if (typeof this.state.headToHead !== 'undefined') {
                 headToHeadScore = this.state.headToHead.slice();
             } else {
                 headToHeadScore = [0, 0];
             }
-            
-            if(typeof this.state.winner !== 'undefined') {
+
+            if (typeof this.state.winner !== 'undefined') {
                 headToHeadScore[this.state.winner] = this.state.headToHead[this.state.winner] + 1;
             }
-            
+
             headToHead = (
                 <div className="stats__component" key="head-to-head">
                     <span className="header stats__title">Head To Head</span>
@@ -227,14 +217,14 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 </div>
             );
-            
+
         }
 
-        if(this.state.fullView) {
+        if (this.state.fullView) {
 
             settings = (
                 <div className="stats__component settingsComponent" key="gamesettings">
-                    <span className="header stats__title">Game Settings</span>
+                    <span className="settings_title header">Game Settings</span>
                     <GameSettingsComponent/>
                 </div>
             );
@@ -245,8 +235,8 @@ var StatsComponent = module.exports = React.createClass({
                     <LeaderboardComponent />
                 </div>
             );
-            
-            if(typeof this.state.mostFrequentPlayer !== 'undefined') {
+
+            if (typeof this.state.mostFrequentPlayer !== 'undefined') {
                 mostFrequentPlayer = (
                     <div className="stats__component stats__component--pin-bottom" key="league-form-player">
                         <span className="header stats__title">Most Frequent Player</span>
@@ -254,8 +244,8 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
-            if(typeof this.state.biggestWinningStreak !== 'undefined') {
+
+            if (typeof this.state.biggestWinningStreak !== 'undefined') {
                 biggestWinningStreak = (
                     <div className="stats__component stats__component--bordered" key="biggest-winning-streak">
                         <span className="header stats__title">Biggest Winning Streak</span>
@@ -265,8 +255,8 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
-            if(typeof this.state.mostConsecutiveLosses !== 'undefined') {
+
+            if (typeof this.state.mostConsecutiveLosses !== 'undefined') {
                 mostConsecutiveLosses = (
                     <div className="stats__component stats__component--bordered" key="most-consecutive-losses">
                         <span className="header stats__title">Most Consecutive Losses</span>
@@ -276,8 +266,8 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
-            if(typeof this.state.largestWhooping !== 'undefined') {
+
+            if (typeof this.state.largestWhooping !== 'undefined') {
                 largestWhooping = (
                     <div className="stats__component stats__component--bordered" key="largest-whooping">
                         <span className="header stats__title">Largest Whooping</span>
@@ -293,8 +283,8 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
-            if(typeof this.state.totalCompanyGames !== 'undefined') {
+
+            if (typeof this.state.totalCompanyGames !== 'undefined') {
                 totalCompanyGames = (
                     <div className="stats__component stats__component--pin-bottom" key="total-company-games">
                         <span className="header stats__title">Total Company Games</span>
@@ -302,50 +292,51 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                 );
             }
-            
+
         }
 
         return (
-            <div className={classes}>
-                <div class="test">
-                    {settings}
-                </div>
-                <StatusComponent mini='true' />
-                <div className="stats__inner">
-                    <div className="stats_left stats">
-                           <div className='stats__group'>
-                            <ReactCSSTransitionGroup transitionName='stats__components'>
+            <div>
+                <div className={classes}>
+                    <div className="settingsContainer">
+                        {settings}
+                    </div>
+                    <StatusComponent mini='true' />
+                    <div className="stats__inner">
+                        <div className="stats_left stats">
+                            <div className='stats__group'>
+                                <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}
                                 {score}
-                            </ReactCSSTransitionGroup>
-                        </div>
-                        <div className='stats__group'>
-                            <ReactCSSTransitionGroup transitionName='stats__components'>
+                                </ReactCSSTransitionGroup>
+                            </div>
+                            <div className='stats__group'>
+                                <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {leaderboard}
-                            </ReactCSSTransitionGroup>
+                                </ReactCSSTransitionGroup>
+                            </div>
                         </div>
-                    </div>
-                    <div className="stats_right stats">
-                        <div className='stats__group'>
-                            <ReactCSSTransitionGroup transitionName='stats__components'>
+                        <div className="stats_right stats">
+                            <div className='stats__group'>
+                                <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}
                                 {headToHead}
-                            </ReactCSSTransitionGroup>
-                        </div>
-                        <div className='stats__group'>
-                            <ReactCSSTransitionGroup transitionName='stats__components'>
+                                </ReactCSSTransitionGroup>
+                            </div>
+                            <div className='stats__group'>
+                                <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {biggestWinningStreak}
                                 {mostConsecutiveLosses}
                                 {largestWhooping}
                                 {mostFrequentPlayer}
-                            </ReactCSSTransitionGroup>
+                                </ReactCSSTransitionGroup>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         );
     }
-    
 
-    
+
 });

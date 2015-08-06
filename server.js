@@ -64,6 +64,11 @@ app.get('/', function(req, res) {
 	});
 });
 
+app.get('/maxScore', function(req, res){
+    res.json(global.settings.maxScore);
+});
+
+
 app.get('/leaderboard', function(req, res) {
 	// This could use a streaming response instead
 	leaderboard.get(10)

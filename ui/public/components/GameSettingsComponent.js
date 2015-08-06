@@ -11,7 +11,7 @@ var GameSettingsComponent = module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            selected: 21
+            selected: 11
         };
     },
 
@@ -19,8 +19,7 @@ var GameSettingsComponent = module.exports = React.createClass({
 
     componentDidMount: function() {
         var self = this;
-        this.setState(this.getInitialState());
-
+        this.getState();
         node.socket.on('game.end', self.clearInfo);
         node.socket.on('game.changeSettings', self.updateSettings);
 
@@ -38,15 +37,25 @@ var GameSettingsComponent = module.exports = React.createClass({
         }
     },
 
+    getState: function(){
+        var self = this;
+
+        $.get(config.clientUrl + '/maxScore', function(score) {
+            self.setState({
+                selected: score
+            });
+            self.forceUpdate();
+        });
+    },
+
     clearInfo: function(){
         this.reset()
     },
 
     reset: function(){
         if(this.isMounted()) {
-            this.setState(this.getInitialState());
+            this.getState();
         }
-
     },
 
     show: function() {
@@ -86,6 +95,7 @@ var GameSettingsComponent = module.exports = React.createClass({
 
         var settingsPanel = (
             <div className='settingsPanel'>
+                <br/>
                 {settingsRendered}
             </div>
         );

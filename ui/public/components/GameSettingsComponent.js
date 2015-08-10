@@ -30,7 +30,6 @@ var GameSettingsComponent = module.exports = React.createClass({
 
         if(self.isMounted()) {
             var maxScore = returnVal.maxScore;
-            console.log(maxScore);
             self.setState({
                 selected: maxScore
             });
@@ -80,12 +79,9 @@ var GameSettingsComponent = module.exports = React.createClass({
         var settingsRendered = [];
 
         for (var i = 0; i < settings.length; i++) {
-            var classString = 'setting ';
-            console.log('SELECTED: ' + self.state.selected);
-            console.log(settings[i].maxScore);
+            var classString = 'setting waves-effect waves-light btn orange col s6 ';
             if(settings[i].maxScore === self.state.selected){
-                console.log('true');
-                classString += 'selected';
+                classString += 'darken-4';
             }
             settingsRendered.push(
                 <span className={classString}>{settings[i].title}</span>
@@ -94,7 +90,7 @@ var GameSettingsComponent = module.exports = React.createClass({
 
 
         var settingsPanel = (
-            <div className='settingsPanel'>
+            <div className='settingsPanel row'>
                 <br/>
                 {settingsRendered}
             </div>

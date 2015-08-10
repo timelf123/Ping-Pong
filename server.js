@@ -4,8 +4,7 @@ var
 	chalk = require('chalk'),
 	jade = require('jade'),
 	serveStatic = require('serve-static'),
-	// environment = process.env.NODE_ENV = process.env.NODE_ENV || 'production',
-	environment = 'development',
+	environment = process.env.NODE_ENV = process.env.NODE_ENV || 'production', // RUN LOCALLY WITH NODE_ENV=development node server.js
 	app = require('./app.js'),
 	leaderboard = require('./lib/leaderboard');
 	Player = require('./models/Player'),
@@ -47,9 +46,15 @@ player = {};
 io = io.listen(config.wsPort);
 console.log(chalk.green('Websocket Server: Listening on port ' + config.wsPort));
 
+var logLevel = 1; // production
+if (environment === 'development') {
+	logLevel = 3;
+}
+
 io.configure(function() {
-	io.set('log level', 3);
+	io.set('log level', logLevel);
 });
+
 
 app.get('/', function(req, res) {
 

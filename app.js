@@ -4,7 +4,7 @@
  */
 
 var
-    config = require('./config')["development"],
+    config = require('./config')[process.env.NODE_ENV],
     express = require('express'),
     cors = require('cors')
     knex = require('knex')(config.database),

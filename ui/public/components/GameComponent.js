@@ -60,9 +60,19 @@ var GameComponent = module.exports = React.createClass({
     componentDidMount: function() {
 
         var _this = this;
-        
+
         // going to go suuuuper hacky here and inject add players form into header
-        $('#header').append('<div class="add-players"><div class="add"><input placeholder="Name" type="text"></input><button class="go">Lets Rumble</button></div></div>');
+        $('.nav-wrapper').append('\
+            <div class="row">\
+                <form class="right">\
+                    <div class="input-field col 4">\
+                        <input placeholder="Name" type="text" id="name" class="black-text"></input>\
+                        <label for="name" class="white-text">Name</label>\
+                    </div>\
+                    <a class="go waves-effect waves-light blue btn">Lets Rumble</a>\
+                </form>\
+            </div>\
+        ');
 
         //sounds = new Howl(soundSprite);
 

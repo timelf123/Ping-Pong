@@ -74,18 +74,18 @@ var LeaderboardComponent = module.exports = React.createClass({
 
         players = this.state.players.map(function(player, i) {
             return (
-                <li className='leaderboard__player' key={player.id}>
-                    <div className='leaderboard__player__inner'>
-                        <div className='leaderboard__player__name'>{i + 1}. {player.name} - <span className='elo'>{player.elo} points</span></div>
-                    </div>
+                <li className='collection-item avatar'>
+                    <img src="../../img/players/{player.image}" className="circle" />
+                    <span className="title">{player.name}</span>
+                    <p>{player.elo} points</p>
                 </li>
             );
         });
-        
+
         if(this.state.active) {
             leaderboard = (
-                <div className='leaderboard' key='leaderboard'>
-                    <ol>
+                <div className='leaderboard col s6' key='leaderboard'>
+                    <ol className="collection">
                         {players}
                     </ol>
                 </div>

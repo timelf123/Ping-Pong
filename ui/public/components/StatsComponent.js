@@ -229,8 +229,7 @@ var StatsComponent = module.exports = React.createClass({
             );
 
             leaderboard = (
-                <div className="stats__component" key="leaderboard">
-                    <span className="header stats__title">Leaderboard</span>
+                <div className="stats__component row" key="leaderboard">
                     <LeaderboardComponent />
                 </div>
             );

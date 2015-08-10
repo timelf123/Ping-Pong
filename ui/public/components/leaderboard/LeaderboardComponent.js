@@ -84,7 +84,7 @@ var LeaderboardComponent = module.exports = React.createClass({
 
         if(this.state.active) {
             leaderboard = (
-                <div className='leaderboard col s6' key='leaderboard'>
+                <div className='leaderboard' key='leaderboard'>
                     <ol className="collection">
                         {players}
                     </ol>

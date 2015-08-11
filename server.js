@@ -12,6 +12,7 @@ var
     getConfig = require('./config'),
     config = getConfig[environment],
     settings = getConfig.global;
+	http = require('http');
 
 
 global.settings = settings;
@@ -42,9 +43,10 @@ gameController = require('./classes/gameController');
 game = {};
 player = {};
 
+var server = http.createServer(app);
+
 // Setup socketio
-io = io.listen(config.wsPort);
-console.log(chalk.green('Websocket Server: Listening on port ' + config.wsPort));
+io = io.listen(server);
 
 var logLevel = 1; // production
 if (environment === 'development') {
@@ -82,8 +84,8 @@ app.get('/leaderboard', function(req, res) {
 		});
 });
 
-app.listen(config.clientPort);
-console.log(chalk.green('Web Server: Listening on port ' + config.clientPort));
+server.listen(config.port);
+console.log(chalk.green('Server: Listening on port ' + config.port));
 
 game = new gameController();
 

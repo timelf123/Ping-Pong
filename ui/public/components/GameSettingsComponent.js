@@ -40,7 +40,7 @@ var GameSettingsComponent = module.exports = React.createClass({
     getState: function(){
         var self = this;
 
-        $.get(config.clientUrl + '/maxScore', function(score) {
+        $.get(config.url + '/maxScore', function(score) {
             self.setState({
                 selected: score
             });

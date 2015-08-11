@@ -57,7 +57,7 @@ var LeaderboardComponent = module.exports = React.createClass({
 
         getLeaderboard: function() {
             var _this = this;
-            $.get(config.clientUrl + '/leaderboard', function(players) {
+            $.get(config.url + '/leaderboard', function(players) {
             _this.setState({
                 players: players
             });
@@ -81,7 +81,7 @@ var LeaderboardComponent = module.exports = React.createClass({
                 </li>
             );
         });
-        
+
         if(this.state.active) {
             leaderboard = (
                 <div className='leaderboard' key='leaderboard'>

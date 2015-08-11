@@ -84,8 +84,8 @@ app.get('/leaderboard', function(req, res) {
 		});
 });
 
-server.listen(config.clientPort);
-console.log(chalk.green('Web Server: Listening on port ' + config.clientPort));
+server.listen(config.port);
+console.log(chalk.green('Server: Listening on port ' + config.port));
 
 game = new gameController();
 

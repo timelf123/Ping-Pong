@@ -18,14 +18,13 @@ html(lang='en')
         script.
         
             var config = window.config = {
-                clientUrl: '#{app.locals.config.clientUrl}',
-                clientPort: '#{app.locals.config.clientPort}',
-                wsUrl: '#{app.locals.config.clientUrl}' + ':' + '#{app.locals.config.wsPort}',
+                url: '#{app.locals.config.url}',
+                port: '#{app.locals.config.port}',
                 winningViewDuration: #{app.locals.settings.winningViewDuration}
             };
             
-            if(config.clientPort) {
-                config.clientUrl += ':' + config.clientPort;
+            if(config.port) {
+                config.url += ':' + config.port;
             }
 
         script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
@@ -48,4 +47,4 @@ html(lang='en')
             
         div#game.container
         //- audio#audio-stream: source
-        script#nodejs_loader(src='#{app.locals.config.clientUrl}:#{app.locals.config.wsPort}/socket.io/socket.io.js')
+        script#nodejs_loader(src='#{app.locals.config.url}:#{app.locals.config.port}/socket.io/socket.io.js')

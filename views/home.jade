@@ -23,7 +23,7 @@ html(lang='en')
                 winningViewDuration: #{app.locals.settings.winningViewDuration}
             };
             
-            if(config.port) {
+            if(config.port && app.locals.config.environment != 'production') {
                 config.url += ':' + config.port;
             }
 

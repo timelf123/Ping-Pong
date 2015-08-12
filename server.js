@@ -62,10 +62,12 @@ app.get('/', function(req, res) {
 
 	delete require.cache[path.resolve('./versions/js.json')];
 	delete require.cache[path.resolve('./versions/css.json')];
+	console.log(environment);
 
 	res.render('home.jade', {
 		title: 'Ping Pong',
 		metaDesc: 'Ping Pong',
+		environment: environment,
 		JSVersions: require('./versions/js'),
 		CSSVersions: require('./versions/css')
 	});

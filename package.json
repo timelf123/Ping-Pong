@@ -2,8 +2,7 @@
   "name": "pong",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "gulp default"
+    "start": "node server.js"
   },
   "version": "1.0.0-14",
   "engines": {

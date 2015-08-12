@@ -100,7 +100,14 @@ io.sockets.on('connection', function(client) {
 		cardReader.connectionStatus();
 	}
 
-	client.on('fakeScored', game.feelerPressed); // Fake score event for easier testing
+	if (environment === 'development') {
+		client.on('fakeScored', game.feelerPressed); // Fake score event for easier testing
+		client.on('fakeEndGame', function() {
+			var record = (settings.recordUnfinishedGames !== 'undefined')? settings.recordUnfinishedGames : false;
+			game.end(record);
+		});
+	}
+
 	client.on('fakeJoin', function(data) { // fake rfid
 		var name = data.name;
 
@@ -124,10 +131,7 @@ io.sockets.on('connection', function(client) {
 			}
 		});
 	});
-	client.on('fakeEndGame', function() {
-		var record = (settings.recordUnfinishedGames !== 'undefined')? settings.recordUnfinishedGames : false;
-		game.end(record);
-	});
+
 });
 
 

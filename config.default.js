@@ -10,7 +10,8 @@ module.exports = {
                 port: 8889,
                 user: '',
                 password: '',
-                database: 'pong'
+                database: 'pong',
+                ssl: true
             },
             migrations: {
                 directory: __dirname + '/migrations',
@@ -29,7 +30,8 @@ module.exports = {
                 port: 8889,
                 user: '',
                 password: '',
-                database: 'pong'
+                database: 'pong',
+                ssl: true
             },
             migrations: {
                 directory: __dirname + '/migrations',

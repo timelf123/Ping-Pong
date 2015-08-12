@@ -23,7 +23,7 @@ html(lang='en')
             };
             console.log('env: #{environment}');
             if(config.port && '#{environment}' != 'production') {
-                console.log('we hurrr');
+                console.log('we hurrr')
                 config.url += ':' + config.port;
             }
 
@@ -47,4 +47,8 @@ html(lang='en')
             
         div#game.container
         //- audio#audio-stream: source
-        script#nodejs_loader(src='#{app.locals.config.url}:#{app.locals.config.port}/socket.io/socket.io.js')
+        
+        if environment == 'production'
+            script#nodejs_loader(src='#{app.locals.config.url}/socket.io/socket.io.js')
+        else
+            script#nodejs_loader(src='#{app.locals.config.url}:#{app.locals.config.port}/socket.io/socket.io.js')

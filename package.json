@@ -3,7 +3,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "gulp default"
+    "build": "gulp default"
   },
   "version": "1.0.0-14",
   "engines": {

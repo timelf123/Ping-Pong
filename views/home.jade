@@ -16,7 +16,6 @@ html(lang='en')
         //- Expose some config variables to the client side app
         //- This needs to be handled more elegantly (and probably on the server side)
         script.
-            debugger;
             var config = window.config = {
                 url: '#{app.locals.config.url}',
                 port: '#{app.locals.config.port}',

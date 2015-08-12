@@ -4,7 +4,7 @@ module.exports = {
         port: 8989,
         cardReaderPort: 9898,
         database: {
-            client: 'mysql',
+            client: 'postgres',
             connection: {
                 host: '127.0.0.1',
                 port: 8889,
@@ -23,7 +23,7 @@ module.exports = {
         port: 8989,
         cardReaderPort: 9898,
         database: {
-            client: 'mysql',
+            client: 'postgres',
             connection: {
                 host: '127.0.0.1',
                 port: 8889,

@@ -12,6 +12,8 @@ html(lang='en')
         meta(name='apple-mobile-web-app-title', content=title)
         meta(name='description', content=metaDesc)
         link(href='build/#{CSSVersions["base.css"]}', rel='stylesheet')
+        // to do: load locally
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css", rel='stylesheet')
         
         //- Expose some config variables to the client side app
         //- This needs to be handled more elegantly (and probably on the server side)
@@ -29,6 +31,9 @@ html(lang='en')
 
         script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
         script(src='build/#{JSVersions["main.js"]}')
+            
+        // to do: load locally
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js")
 
         link(rel='shortcut icon', href='img/logos/startup_icon.png')
         link(rel='icon', href='img/logos/startup_icon.png', type='image/png')

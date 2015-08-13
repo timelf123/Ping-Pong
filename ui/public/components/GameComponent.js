@@ -60,7 +60,7 @@ var GameComponent = module.exports = React.createClass({
     componentDidMount: function() {
 
         var _this = this;
-        
+
         // going to go suuuuper hacky here and inject add players form into header
         $('#header').append('<div class="add-players"><div class="add"><input placeholder="Name" type="text"></input><button class="go">Lets Rumble</button></div></div>');
 
@@ -102,6 +102,9 @@ var GameComponent = module.exports = React.createClass({
         $('.go').on('click', function() {
             var $in = $('input');
             var name = $in.val();
+
+            if (name == '') { return; }
+
             $in.val('');
             node.socket.emit('fakeJoin', {'name' : name});
         });

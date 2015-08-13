@@ -79,9 +79,9 @@ var GameSettingsComponent = module.exports = React.createClass({
         var settingsRendered = [];
 
         for (var i = 0; i < settings.length; i++) {
-            var classString = 'setting ';
+            var classString = 'setting orange btn ';
             if(settings[i].maxScore === self.state.selected){
-                classString += 'selected';
+                classString += 'darken-4';
             }
             settingsRendered.push(
                 <span className={classString}>{settings[i].title}</span>

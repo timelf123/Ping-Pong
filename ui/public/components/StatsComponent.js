@@ -116,7 +116,7 @@ var StatsComponent = module.exports = React.createClass({
     render: function () {
 
         var
-            classes = 'stats_container clearfix',
+            classes = 'stats_container center clearfix',
             score,
             headToHead,
             headToHeadScore,

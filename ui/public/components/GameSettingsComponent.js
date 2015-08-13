@@ -30,7 +30,6 @@ var GameSettingsComponent = module.exports = React.createClass({
 
         if(self.isMounted()) {
             var maxScore = returnVal.maxScore;
-            console.log(maxScore);
             self.setState({
                 selected: maxScore
             });
@@ -81,10 +80,7 @@ var GameSettingsComponent = module.exports = React.createClass({
 
         for (var i = 0; i < settings.length; i++) {
             var classString = 'setting ';
-            console.log('SELECTED: ' + self.state.selected);
-            console.log(settings[i].maxScore);
             if(settings[i].maxScore === self.state.selected){
-                console.log('true');
                 classString += 'selected';
             }
             settingsRendered.push(

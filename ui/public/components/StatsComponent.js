@@ -224,7 +224,6 @@ var StatsComponent = module.exports = React.createClass({
 
             settings = (
                 <div className="stats__component settingsComponent" key="gamesettings">
-                    <span className="settings_title header">Game Settings</span>
                     <GameSettingsComponent/>
                 </div>
             );

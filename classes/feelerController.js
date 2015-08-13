@@ -44,14 +44,11 @@ FeelerController.prototype.counter = function() {
     if(!self.timer && !self.isUndo()){
 
         self.timer = setTimeout(function(){
-            console.log('SCORING FUNCTION RUNNING');
             self.emit('score');
             self.timer = null;
         }, self.threshold);
     }
     else if(self.isUndo()){
-        console.log("killing scoring function!");
-        console.log(self.timer);
         clearTimeout(self.timer);
         self.emit('removePoint');
         self.timer = null;

@@ -21,9 +21,8 @@ html(lang='en')
                 port: '#{app.locals.config.port}',
                 winningViewDuration: #{app.locals.settings.winningViewDuration}
             };
-            console.log('env: #{environment}');
+            
             if(config.port && '#{environment}' != 'production') {
-                console.log('we hurrr')
                 config.url += ':' + config.port;
             }
 

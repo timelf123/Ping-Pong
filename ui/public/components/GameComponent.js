@@ -65,7 +65,7 @@ var GameComponent = module.exports = React.createClass({
         $('.nav-wrapper').append('\
             <div class="add-players right">\
                 <div class="add row">\
-                    <input placeholder="Name" type="text" class="col s6"></input>\
+                    <input id="name" placeholder="Name" type="text" class="col s6"></input>\
                     <a class="go waves-effect waves-light right blue col s6">Lets Rumble</a>\
                 </div>\
             </div>\

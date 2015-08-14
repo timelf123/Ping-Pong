@@ -109,6 +109,9 @@ var GameComponent = module.exports = React.createClass({
         $('.go').on('click', function() {
             var $in = $('input');
             var name = $in.val();
+
+            if (name == '') { return; }
+
             $in.val('');
             node.socket.emit('fakeJoin', {'name' : name});
         });

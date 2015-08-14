@@ -135,6 +135,8 @@ io.sockets.on('connection', function(client) {
 		});
 	});
 
+	client.on('fakeJoin', clientJoined);
+
 });
 
 
@@ -168,5 +170,29 @@ if (CARDREADER) {
 
 	cardReader.on('disconnect', function() {
 		io.sockets.emit('cardReader.disconnect');
+	});
+}
+
+function clientJoined(data) { // fake rfid
+	var name = data.name;
+
+	// check if player name exists in db
+	new Player({name: name})
+	.fetch()
+	.then(function(model) {
+		if(model === null) {
+			// no player with this name was found. let's create a new entry
+			var randomRFID = Math.floor(Math.random() * 100000) + 1; // generate a random large rfid for now
+			new Player({
+				name : name,
+				rfid : randomRFID
+			}).save().then(function(model) {
+				game.addPlayerByRfid(model.get('rfid'));
+			});
+		}
+		else {
+			rfid = model.get('rfid');
+			game.addPlayerByRfid(model.get('rfid'));
+		}
 	});
 }

@@ -55,8 +55,6 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     line-height: 100%;
-    color: #FFF;
-    background: #221f1f;
     overflow: hidden;
     text-transform: uppercase;
 }
@@ -252,7 +250,7 @@ body {
     height: 100vh;
     left: 0;
     top: 0;
-    background: #221f1f;
+    background: @background;
     transition: transform 600ms ease-in-out;
 
     &.compact-view {
@@ -347,40 +345,6 @@ body {
         bottom: 0;
         content: '';
     }
-}
-
-.stats__title {
-    margin-bottom: 16px;
-    color: darken(#fff, 30%);
-}
-
-.leaderboard {
-    width: 70%;
-    margin: 0 auto;
-    text-align: left;
-}
-
-.leaderboard__player {
-    padding: 8px 0;
-    border-bottom: 1px solid #fff;
-
-    &:last-child {
-        border-bottom: 0;
-    }
-}
-
-.leaderboard__player__name {
-    font-size: @baseFont;
-    line-height: 56px;
-    font-weight: 700;
-
-  .elo {
-    font-size: @smaller;
-  }
-}
-
-.leaderboard__player:nth-child(even) {
-    color: darken(#fff, 30%);
 }
 
 .status-indicators {

@@ -300,7 +300,7 @@ var StatsComponent = module.exports = React.createClass({
                         {settings}
                     </div>
                     <StatusComponent mini='true' />
-                    <div className="stats__inner">
+                    <div className="stats__inner container center">
                         <div className="stats card left">
                             <div className='stats__group'>
                                 <ReactCSSTransitionGroup transitionName='stats__components'>

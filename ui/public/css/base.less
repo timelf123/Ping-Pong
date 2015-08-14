@@ -57,6 +57,7 @@ body {
     line-height: 100%;
     overflow: hidden;
     text-transform: uppercase;
+    background: @background;
 }
 #game {
     width: 100%;
@@ -297,15 +298,6 @@ body {
     height: 100%;
     transform: translate3d(0, 0fpx, 0);
     transition: transform 600ms ease-in-out;
-
-    &:after {
-        position: absolute;
-        width: 1px;
-        height: 100%;
-        top: 40px;
-        background: #fff;
-        content: '';
-    }
 
 }
 

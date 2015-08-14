@@ -74,10 +74,9 @@ var LeaderboardComponent = module.exports = React.createClass({
 
         players = this.state.players.map(function(player, i) {
             return (
-                <li className='leaderboard__player' key={player.id}>
-                    <div className='leaderboard__player__inner'>
-                        <div className='leaderboard__player__name'>{i + 1}. {player.name} - <span className='elo'>{player.elo} points</span></div>
-                    </div>
+                <li className='collection-item avatar' key={player.id}>
+                    <img src='../../img/{player.image}' className='circle' />
+                    <div className=''>{i + 1}. {player.name} - <span className='elo'>{player.elo} points</span></div>
                 </li>
             );
         });
@@ -85,9 +84,9 @@ var LeaderboardComponent = module.exports = React.createClass({
         if(this.state.active) {
             leaderboard = (
                 <div className='leaderboard' key='leaderboard'>
-                    <ol>
+                    <ul className='collection'>
                         {players}
-                    </ol>
+                    </ul>
                 </div>
             );
         }

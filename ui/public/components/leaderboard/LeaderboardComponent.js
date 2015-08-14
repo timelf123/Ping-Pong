@@ -76,7 +76,7 @@ var LeaderboardComponent = module.exports = React.createClass({
             return (
                 <li className='collection-item avatar' key={player.id}>
                     <img src={player.image} className='circle' />
-                    <div className=''>{i + 1}. {player.name} - <span className='elo'>{player.elo} points</span></div>
+                    <div className='left name'>{i + 1}. {player.name} <span className='elo secondary-content'>{player.elo}</span></div>
                 </li>
             );
         });

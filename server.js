@@ -110,7 +110,9 @@ io.sockets.on('connection', function(client) {
 
 	client.on('fakeJoin', function(data) { // fake rfid
 		var name = data.name;
-
+		var hash = '51d35d909e645b85e8ef72aad666a3f7'; // fpm5022@gmail by default yolo
+		var url = 'http://www.gravatar.com/avatar/' + hash;
+//http://www.gravatar.com/avatar/51d35d909e645b85e8ef72aad666a3f7
 		// check if player name exists in db
 		new Player({name: name})
 		.fetch()
@@ -120,7 +122,8 @@ io.sockets.on('connection', function(client) {
 				var randomRFID = Math.floor(Math.random() * 100000) + 1; // generate a random large rfid for now
 				new Player({
 					name : name,
-					rfid : randomRFID
+					rfid : randomRFID,
+					image : url
 				}).save().then(function(model) {
 					game.addPlayerByRfid(model.get('rfid'));
 				});

@@ -11,7 +11,7 @@ var
     node = require('../js/node');
 
 
-    
+
 var PlayerComponent = module.exports = React.createClass({
 
 
@@ -84,37 +84,37 @@ var PlayerComponent = module.exports = React.createClass({
             image: player.image
         });
     },
-    
-    
-    
+
+
+
     score: function(score) {
         this.setState({
             score: score
         });
     },
-    
-    
-    
+
+
+
     cancelPoint: function(score) {
         this.setState({
             score: score
         });
     },
-    
-    
-    
+
+
+
     gamePoint: function(isGamePoint) {
-        
+
         var _this = this;
-        
+
         isGamePoint = typeof isGamePoint === 'undefined' ? true : isGamePoint;
-        
+
         if(isGamePoint) {
-        
+
             this.setState({
                 gamePoint: true
             });
-            
+
             if(typeof _this.pulse === 'undefined') {
                 this.pulse = setInterval(function() {
                     if(_this.props.server == _this.props.positionId) {
@@ -124,45 +124,45 @@ var PlayerComponent = module.exports = React.createClass({
                     }
                 }, 900);
             }
-            
+
         } else {
-            
+
             this.setState({
                 gamePoint: false,
                 gamePointVisible: true
             });
-            
+
             clearTimeout(_this.pulse);
             _this.pulse = undefined;
-            
+
         }
-        
+
     },
-    
-    
-    
+
+
+
     win: function() {
-        
+
         this.gamePoint(false);
-        
+
         this.setState({
             win: true,
             serving: false
         });
-        
+
     },
-    
-    
-    
+
+
+
     lose: function() {
-        
+
         this.gamePoint(false);
-        
+
         this.setState({
             win: false,
             serving: false
         });
-        
+
     },
 
 
@@ -171,9 +171,9 @@ var PlayerComponent = module.exports = React.createClass({
         this.gamePoint(false);
         this.setState(this.getInitialState());
     },
-    
-    
-    
+
+
+
     render: function() {
 
         var
@@ -187,9 +187,9 @@ var PlayerComponent = module.exports = React.createClass({
             winner;
 
         if(this.props.player.image) {
-            style = { 'background-image': 'url(img/players/' + this.props.player.image + ')' };
+            style = { 'background-image': 'url(' + this.props.player.image + ')' };
             if(this.state.win) {
-                style = { 'background-image': 'url(img/players/win/' + this.props.player.image + ')' };
+                style = { 'background-image': 'url(' + this.props.player.image + ')' };
             }
         }
 
@@ -198,15 +198,15 @@ var PlayerComponent = module.exports = React.createClass({
         if(this.props.server == this.props.positionId && !this.state.win) {
             status = <div className={statusClasses}></div>;
         }
-        
+
         if(this.state.win && !this.state.lose) {
             playerClasses += ' win';
         }
-        
+
         if(this.state.lose) {
             playerClasses += 'loses';
         }
-        
+
         if(!this.state.win) {
             details = (
                 <div className='details'>
@@ -215,17 +215,17 @@ var PlayerComponent = module.exports = React.createClass({
                 </div>
             );
         }
-        
+
         if(this.state.gamePointVisible) {
             gamePointClasses += ' status--visible';
         } else {
             gamePointClasses += ' status--hidden';
         }
-        
+
         if(this.state.gamePoint && !this.state.win) {
             gamePoint = <div className={gamePointClasses}>Game Point</div>;
         }
-        
+
         if(this.state.win) {
             winner = (
                 <div className='winner'>{this.props.player.name} Wins!</div>
@@ -245,7 +245,7 @@ var PlayerComponent = module.exports = React.createClass({
         );
 
     }
-    
 
-    
+
+
 });

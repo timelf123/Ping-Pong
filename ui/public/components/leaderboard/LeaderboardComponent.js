@@ -75,7 +75,7 @@ var LeaderboardComponent = module.exports = React.createClass({
         players = this.state.players.map(function(player, i) {
             return (
                 <li className='collection-item avatar' key={player.id}>
-                    <img src='../../img/{player.image}' className='circle' />
+                    <img src={player.image} className='circle' />
                     <div className=''>{i + 1}. {player.name} - <span className='elo'>{player.elo} points</span></div>
                 </li>
             );

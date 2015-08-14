@@ -230,7 +230,6 @@ var StatsComponent = module.exports = React.createClass({
 
             leaderboard = (
                 <div className="stats__component" key="leaderboard">
-                    <span className="header stats__title">Leaderboard</span>
                     <LeaderboardComponent />
                 </div>
             );
@@ -302,7 +301,7 @@ var StatsComponent = module.exports = React.createClass({
                     </div>
                     <StatusComponent mini='true' />
                     <div className="stats__inner">
-                        <div className="stats_left stats">
+                        <div className="stats card left">
                             <div className='stats__group'>
                                 <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}
@@ -315,7 +314,7 @@ var StatsComponent = module.exports = React.createClass({
                                 </ReactCSSTransitionGroup>
                             </div>
                         </div>
-                        <div className="stats_right stats">
+                        <div className="stats card right">
                             <div className='stats__group'>
                                 <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}

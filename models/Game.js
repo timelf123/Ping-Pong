@@ -68,7 +68,7 @@ Game = module.exports = bookshelf.Model.extend({
                    this.whereIn('player1_id', playerIds).andWhere('player0_id', playerIds[1]);
                });
        })
-       .query('orderBy', 'end_date', 'desc');
+       .query('orderBy', 'end', 'desc');
 
    }
 

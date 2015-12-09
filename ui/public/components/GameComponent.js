@@ -9,17 +9,17 @@ var
     React = require('react'),
     AmpersandState = require('ampersand-state'),
     Howl = require('howler').Howl,
-    //soundSprite = require('../build/sprite'),
+    soundSprite = require('../build/sprite'),
     config = window.config,
     node = require('../js/node'),
     PlayerComponent = require('./PlayerComponent'),
     StatusComponent = require('./StatusComponent'),
     StatusIndicatorComponent = require('./StatusIndicatorComponent'),
     StatsComponent = require('./StatsComponent'),
-    //soundPath = config.clientUrl + '/sounds/',
-    //soundQueue = [],
+    soundPath = config.clientUrl + '/sounds/',
+    soundQueue = [],
     soundsPlaying = false,
-    //sounds,
+    sounds,
     PlayerModel,
     playerProps,
     player0,
@@ -64,7 +64,7 @@ var GameComponent = module.exports = React.createClass({
         // going to go suuuuper hacky here and inject add players form into header
         $('#header').append('<div class="add-players"><div class="add"><input placeholder="Name" type="text"></input><button class="go">Lets Rumble</button></div></div>');
 
-        //sounds = new Howl(soundSprite);
+        sounds = new Howl(soundSprite);
 
         node.socket.on('game.end', _this.end);
         //node.socket.on('game.score', _this.score);
@@ -115,24 +115,24 @@ var GameComponent = module.exports = React.createClass({
 
 
     switchServer: function(player) {
-        console.log("switching server");
+        console.log("switching server to ", player);
         var
-            _this = this;
-            //playerSound = '';
+            _this = this,
+            playerSound = '';
 
         this.setState({
             server: player
         });
 
         if(player == 0) {
-            //playerSound = player0.name;
+            playerSound = player0.name;
         }
 
         if(player == 1) {
-            //playerSound = player1.name;
+            playerSound = player1.name;
         }
 
-        //this.queueSound(playerSound.toLowerCase() + '-to-serve');
+        this.queueSound(playerSound.toLowerCase() + '-to-serve');
 
     },
 
@@ -165,24 +165,23 @@ var GameComponent = module.exports = React.createClass({
 
         var
             player = data.player;
-            //playerSound;
+            playerSound;
 
         if(player == 0) {
-            //playerSound = player0.name;
+            playerSound = player0.name;
         }
 
         if(player == 1) {
-            //playerSound = player1.name;
+            playerSound = player1.name;
         }
 
-        //this.queueSound('game-point-' + playerSound.toLowerCase());
+        this.queueSound('game-point-' + playerSound.toLowerCase());
 
     },
 
 
-    // temp comment out til sounds are working
     announceScore: function() {
-/*
+
         var announcement = this.state.score;
 
         if(typeof this.state.winner === 'undefined' && announcement[0] > 0 || announcement[1] > 0) {
@@ -198,7 +197,7 @@ var GameComponent = module.exports = React.createClass({
             this.queueSound('' + announcement[1]);
 
         }
-*/
+
     },
 
 
@@ -207,24 +206,24 @@ var GameComponent = module.exports = React.createClass({
 
         var
             _this = this;
-            //playerSound = '';
+            playerSound = '';
 
         this.setState({ winner: data.winner });
 
         if(data.winner == 0) {
-            //playerSound = player0.name;
+            playerSound = player0.name;
         }
 
         if(data.winner == 1) {
-            //playerSound = player1.name;
+            playerSound = player1.name;
         }
 
-        //sounds.play('game_end');
+        sounds.play('game_end');
 
-        //setTimeout(function() {
-        //    this.queueSound(playerSound.toLowerCase + '-won-the-game');
-        //}, 900);
-        //
+        setTimeout(function() {
+           this.queueSound(playerSound.toLowerCase + '-won-the-game');
+        }, 900);
+
     },
 
 
@@ -270,6 +269,7 @@ var GameComponent = module.exports = React.createClass({
 
 
     queueSound: function(sound, offset, cb) {
+        // console.log('queueSound ', sound);
         soundQueue.push({
             name: sound,
             offsetNext: typeof offset === 'undefined' ? 0 : offset,
@@ -281,6 +281,7 @@ var GameComponent = module.exports = React.createClass({
 
 
     playQueue: function() {
+        // console.log('playQueue ', soundQueue);
 
         var
             _this = this,
@@ -304,6 +305,7 @@ var GameComponent = module.exports = React.createClass({
                 duration = soundSprite.sprite[sound.name][1];
                 offset = sound.offsetNext ? duration + sound.offsetNext : duration;
                 sounds.play(sound.name);
+                // console.log('playing sound ', sound.name);
                 setTimeout(function() {
                     play();
                     if(sound.cb) {

@@ -296,4 +296,4 @@ function getGoogleTTS(phrase, language, cb) {
 
 
 
-gulp.task('all', ['css', 'main.js']);
+gulp.task('all', ['css', 'main.js', 'sounds']);

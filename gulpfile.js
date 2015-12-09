@@ -21,7 +21,8 @@ var
     less = require('gulp-less'),
     autoprefixer = require('gulp-autoprefixer'),
     csso = require('gulp-csso'),
-    Speak = require('tts-speak'),
+    // Speak = require('tts-speak'),
+    google_speech = require('google-speech'),
     paths = {};
 
 
@@ -115,54 +116,54 @@ gulp.task('css:clean', function(cb) {
     return del([path.join(paths.build, '*.css')], cb);
 });
 
-gulp.task('say', function(cb) {
- var speak = new Speak({
-        tts: {
-            engine: {                       // The engine to use for tts
-                name: 'voicerss',
-                key: 'ebe126680a19408badc455097eb8b3b5',     // The API key to use
-            },
-            lang: 'en-us',                  // The voice to use
-            speed: 60,                      // Speed in %
-            format: 'mp3',                  // Output audio format
-            quality: '44khz_16bit_stereo',  // Output quality
-            cache: __dirname + '/ui/public/sounds',    // The cache directory were audio files will be stored
-            loglevel: 0,                    // TTS log level (0: trace -> 5: fatal)
-            delayAfter: 500                 // Mark a delay (ms) after each message
-        },
-        speak: {
-            volume: 80,                     // Audio player volume
-            loglevel: 0                     // Audio player log level
-        },
-        loglevel: 0                         // Wrapper log level
-    });
+// gulp.task('say', function(cb) {
+//  var speak = new Speak({
+//         tts: {
+//             engine: {                       // The engine to use for tts
+//                 name: 'voicerss',
+//                 key: 'ebe126680a19408badc455097eb8b3b5',     // The API key to use
+//             },
+//             lang: 'en-us',                  // The voice to use
+//             speed: 60,                      // Speed in %
+//             format: 'mp3',                  // Output audio format
+//             quality: '44khz_16bit_stereo',  // Output quality
+//             cache: __dirname + '/ui/public/sounds',    // The cache directory were audio files will be stored
+//             loglevel: 0,                    // TTS log level (0: trace -> 5: fatal)
+//             delayAfter: 500                 // Mark a delay (ms) after each message
+//         },
+//         speak: {
+//             volume: 80,                     // Audio player volume
+//             loglevel: 0                     // Audio player log level
+//         },
+//         loglevel: 0                         // Wrapper log level
+//     });
 
-    speak.once('ready', function() {
+//     speak.once('ready', function() {
 
-        // Chaining
-        speak
-            .say("Hello and welcome here !")
-            .wait(1000)
-            .say({
-                src: 'Parlez-vous français ?',
-                lang: 'fr-fr',
-                speed: 30
-            });
+//         // Chaining
+//         speak
+//             .say("Hello and welcome here !")
+//             .wait(1000)
+//             .say({
+//                 src: 'Parlez-vous français ?',
+//                 lang: 'fr-fr',
+//                 speed: 30
+//             });
 
-        // Catch when all queue is complete
-        speak.once('idle', function() {
-            speak.say("Of course, with my new text to speech wrapper !");
-        });
+//         // Catch when all queue is complete
+//         speak.once('idle', function() {
+//             speak.say("Of course, with my new text to speech wrapper !");
+//         });
 
-        // Will stop and clean all the queue
-        setTimeout(function() {
-            speak.stop();
-            speak.say('Ok, abort the last queue !')
-            return;
-        }, 1000);
+//         // Will stop and clean all the queue
+//         setTimeout(function() {
+//             speak.stop();
+//             speak.say('Ok, abort the last queue !')
+//             return;
+//         }, 1000);
 
-    });
-});
+//     });
+// });
 
 
 gulp.task('sounds', function(cb) {
@@ -239,7 +240,7 @@ gulp.task('sounds', function(cb) {
     function fetchAnnouncements(player, cb) {
         async.each(announcements, function(announcement, cb) {
             announcement = announcement(player);
-            getTTS(announcement, 'en-gb', cb);
+            getGoogleTTS(announcement, 'en-gb', cb);
         }, cb);
     }
 
@@ -268,6 +269,30 @@ function getTTS(phrase, language, cb) {
     });
 
 }
+
+function getGoogleTTS(phrase, language, cb) {
+
+    language = language || 'en-gb';
+    var fileName = slug(phrase).toLowerCase() + '.mp3';
+    var filePath = path.join('./ui/public/sounds/', fileName);
+    res = true;
+
+    fs.exists(filePath, function(exists) {
+        if(!exists) {
+            google_speech.TTS({
+              text: phrase,
+              language: language,
+              file: filePath
+              }, function(){
+                console.log('sound written: ', fileName);
+                cb(res);
+              }
+            );
+        }
+    });
+
+}
+
 
 
 

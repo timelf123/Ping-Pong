@@ -1,18 +1,16 @@
-var
-	path = require('path'),
-	net = require('net'),
-	chalk = require('chalk'),
-	jade = require('jade'),
-	serveStatic = require('serve-static'),
-	environment = process.env.NODE_ENV = process.env.NODE_ENV || 'production', // RUN LOCALLY WITH NODE_ENV=development node server.js
-	app = require('./app.js'),
-	leaderboard = require('./lib/leaderboard');
-	Player = require('./models/Player'),
-    //deprecating these
-    getConfig = require('./config'),
-    config = getConfig[environment],
-    settings = getConfig.global;
-	http = require('http');
+var path = require('path');
+var	net = require('net');
+var	chalk = require('chalk');
+var	jade = require('jade');
+var	serveStatic = require('serve-static');
+var	environment = process.env.NODE_ENV = process.env.NODE_ENV || 'production'; // RUN LOCALLY WITH NODE_ENV=development node server.js
+var	app = require('./app.js');
+var	leaderboard = require('./lib/leaderboard');
+var	Player = require('./models/Player');
+var getConfig = require('./config');
+var config = getConfig[environment];
+var settings = getConfig.global;
+var	http = require('http');
 
 
 global.settings = settings;
@@ -168,4 +166,4 @@ function clientJoined(data) { // fake rfid
 			game.addPlayerByRfid(model.get('rfid'));
 		}
 	});
-});
+}

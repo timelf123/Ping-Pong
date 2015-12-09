@@ -28,14 +28,14 @@ void loop() {
 
     if (Particle.connected() && !sentOnlineMessage) {
         sentOnlineMessage = true;
-        Particle.publish("online", "1", 60, PRIVATE);
+        Particle.publish("online", NULL, 60, PRIVATE);
     }
 
     if (feeler1Pressed == HIGH) {
         if (feeler1PreviousState == HIGH) {
             feeler1ConsecutivePresses += 1;
         } else {
-            Particle.publish("scored", "1", 60, PRIVATE);
+            Particle.publish("scored", NULL, 60, PRIVATE);
         }
     } else {
         feeler1ConsecutivePresses = 0;
@@ -53,16 +53,16 @@ void loop() {
 
     if (feeler1ConsecutivePresses == consecutivePressThreshold
             && feeler2ConsecutivePresses == consecutivePressThreshold) {
-        Particle.publish("endGame", null, 60, PRIVATE);
+        Particle.publish("endGame", NULL, 60, PRIVATE);
     }
 
     if (batteryLevel == LOW && batteryLevel != batteryLevelPreviousState) {
-        Particle.publish("batteryLow", "1", 60, PRIVATE);
+        Particle.publish("batteryLow", NULL, 60, PRIVATE);
     }
 
     // Ping server every x seconds
     if (millis() - lastPing > pingFrequency) {
-        Particle.publish("ping", "1", 60, PRIVATE);
+        Particle.publish("ping", NULL, 60, PRIVATE);
         lastPing = millis();
     }
 

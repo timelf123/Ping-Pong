@@ -98,7 +98,7 @@ io.sockets.on('connection', function(client) {
 		cardReader.connectionStatus();
 	}
 
-	if (environment === 'development') {
+	if (!CORE) {
 		client.on('fakeScored', game.feelerPressed); // Fake score event for easier testing
 		client.on('fakeEndGame', function() {
 			var record = (settings.recordUnfinishedGames !== 'undefined')? settings.recordUnfinishedGames : false;

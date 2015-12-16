@@ -35,7 +35,7 @@ void loop() {
         if (feeler1PreviousState == HIGH) {
             feeler1ConsecutivePresses += 1;
         } else {
-            Particle.publish("scored", NULL, 60, PRIVATE);
+            Particle.publish("scored", "1", 60, PRIVATE);
         }
     } else {
         feeler1ConsecutivePresses = 0;

@@ -130,10 +130,6 @@ var StatsComponent = module.exports = React.createClass({
             totalCompanyGames,
             winner;
 
-        if (!this.state.fullView) {
-            classes += ' compact-view';
-        }
-
         if (this.state.playersFirstGame) {
             firstMatch = <div className="stat_score">Players First Match</div>;
         }
@@ -224,21 +220,19 @@ var StatsComponent = module.exports = React.createClass({
 
             settings = (
                 <div className="stats__component settingsComponent" key="gamesettings">
-                    <span className="settings_title header">Game Settings</span>
                     <GameSettingsComponent/>
                 </div>
             );
 
             leaderboard = (
-                <div className="stats__component" key="leaderboard">
-                    <span className="header stats__title">Leaderboard</span>
+                <div className="stats__component row" key="leaderboard">
                     <LeaderboardComponent />
                 </div>
             );
 
             if (typeof this.state.mostFrequentPlayer !== 'undefined') {
                 mostFrequentPlayer = (
-                    <div className="stats__component stats__component--pin-bottom" key="league-form-player">
+                    <div className="stats__component stats__component--pin-bottom card-panel" key="league-form-player">
                         <span className="header stats__title">Most Frequent Player</span>
                         <div className="stat_score">{this.state.mostFrequentPlayer}</div>
                     </div>
@@ -247,7 +241,7 @@ var StatsComponent = module.exports = React.createClass({
 
             if (typeof this.state.biggestWinningStreak !== 'undefined') {
                 biggestWinningStreak = (
-                    <div className="stats__component stats__component--bordered" key="biggest-winning-streak">
+                    <div className="stats__component stats__component--bordered card-panel" key="biggest-winning-streak">
                         <span className="header stats__title">Biggest Winning Streak</span>
                         <div className="stat_score">{this.state.biggestWinningStreak.player}</div>
                         <div className="stat_dash">-</div>
@@ -258,7 +252,7 @@ var StatsComponent = module.exports = React.createClass({
 
             if (typeof this.state.mostConsecutiveLosses !== 'undefined') {
                 mostConsecutiveLosses = (
-                    <div className="stats__component stats__component--bordered" key="most-consecutive-losses">
+                    <div className="stats__component stats__component--bordered card-panel" key="most-consecutive-losses">
                         <span className="header stats__title">Most Consecutive Losses</span>
                         <div className="stat_score">{this.state.mostConsecutiveLosses.player}</div>
                         <div className="stat_dash">-</div>
@@ -269,7 +263,7 @@ var StatsComponent = module.exports = React.createClass({
 
             if (typeof this.state.largestWhooping !== 'undefined') {
                 largestWhooping = (
-                    <div className="stats__component stats__component--bordered" key="largest-whooping">
+                    <div className="stats__component stats__component--bordered card-panel" key="largest-whooping">
                         <span className="header stats__title">Largest Whooping</span>
                         <div className="stat_score">
                             {this.state.largestWhooping.scores[0]}
@@ -286,7 +280,7 @@ var StatsComponent = module.exports = React.createClass({
 
             if (typeof this.state.totalCompanyGames !== 'undefined') {
                 totalCompanyGames = (
-                    <div className="stats__component stats__component--pin-bottom" key="total-company-games">
+                    <div className="stats__component stats__component--pin-bottom card-panel" key="total-company-games">
                         <span className="header stats__title">Total Company Games</span>
                         <div className="stat_score">{this.state.totalCompanyGames}</div>
                     </div>
@@ -302,8 +296,8 @@ var StatsComponent = module.exports = React.createClass({
                         {settings}
                     </div>
                     <StatusComponent mini='true' />
-                    <div className="stats__inner">
-                        <div className="stats_left stats">
+                    <div className="row">
+                        <div className="col s6 stats">
                             <div className='stats__group'>
                                 <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}
@@ -316,7 +310,7 @@ var StatsComponent = module.exports = React.createClass({
                                 </ReactCSSTransitionGroup>
                             </div>
                         </div>
-                        <div className="stats_right stats">
+                        <div className="col s6 stats">
                             <div className='stats__group'>
                                 <ReactCSSTransitionGroup transitionName='stats__components'>
                                 {firstMatch}

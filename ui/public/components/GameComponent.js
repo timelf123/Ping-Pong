@@ -99,7 +99,7 @@ var GameComponent = module.exports = React.createClass({
             $('.add-players').fadeOut();
         });
 
-        $('.go').on('click', function() {
+        function addPlayer() {
             var $in = $('input');
             var name = $in.val();
 
@@ -107,6 +107,13 @@ var GameComponent = module.exports = React.createClass({
 
             $in.val('');
             node.socket.emit('fakeJoin', {'name' : name});
+        }
+
+        $('.go').on('click', addPlayer());
+        $('input').keydown(function(e) {
+            if (e.keyCode == 13) {
+                addPlayer();
+            }
         });
         // close temp
 

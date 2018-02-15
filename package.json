@@ -19,7 +19,7 @@
     "chalk": "^0.5.1",
     "cors": "^2.4.1",
     "debounce": "^1.0.0",
-    "emailjs": "0.3.8",
+    "emailjs": "2.0.0",
     "express": "^4.7.2",
     "fancy-log": "1.1.0",
     "google-speech": "0.0.5",

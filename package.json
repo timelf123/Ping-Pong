@@ -35,7 +35,7 @@
     "socket.io": "0.9.16",
     "sparknode": "^0.4.9",
     "through2": "^0.6.1",
-    "uglifyify": "^2.5.0",
+    "uglifyify": "^5.0.2",
     "underscore": "1.6.0"
   },
   "devDependencies": {
